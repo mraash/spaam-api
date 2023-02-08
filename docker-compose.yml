@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  database:
+    container_name: spamer_db
+    image: postgres:13.3-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: spamer
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/database:/var/lib/postgresql/data
