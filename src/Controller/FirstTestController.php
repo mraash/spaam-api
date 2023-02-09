@@ -19,6 +19,6 @@ class FirstTestController extends AbstractController
     #[Route('api/v1/first-test', methods: ['GET', 'HEAD'], name: 'api.first-test')]
     public function index(): Response
     {
-        dd($this->firstTestRepository->findAll());
+        return $this->json($this->firstTestRepository->findAll());
     }
 }
