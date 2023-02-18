@@ -7,8 +7,8 @@
 /var/
 /vendor/
 
-### docker
-/volumes
+### data
+/storage/
 
 ### phpcs
 /.phpcs-cache
