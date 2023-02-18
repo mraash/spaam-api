@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ExceptionView;
+namespace App\Http\ExceptionHandler\Uncaught;
 
 class ExceptionMetadata
 {

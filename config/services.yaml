@@ -6,6 +6,7 @@
 parameters:
     exceptions:
         App\Domain\Exception\FirstTest\FirstTestNotFoundException: { httpCode: 404, visible: true },
+        App\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 403, visible: true },
 
 services:
     # default configuration for services in *this* file
@@ -27,6 +28,6 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Http\ExceptionView\ExceptionResolver:
+    App\Http\ExceptionHandler\Uncaught\ExceptionResolver:
         arguments:
             $rawMetadataList: '%exceptions%'

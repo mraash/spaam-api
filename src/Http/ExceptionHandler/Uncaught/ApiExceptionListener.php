@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ExceptionView;
+namespace App\Http\ExceptionHandler\Uncaught;
 
 use App\Http\Response\Error\ErrorResponse;
 use Psr\Log\LoggerInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiExceptionListener
 {
     public function __construct(
-        private ExceptionResolver $exceptionMutator,
+        private ExceptionResolver $exceptionResolver,
         private LoggerInterface $logger,
         private SerializerInterface $serializer,
         private bool $isDebug
@@ -27,15 +27,24 @@ class ApiExceptionListener
     public function onException(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
-        $metadata = $this->exceptionMutator->getExceptionMedatada(get_class($throwable));
+        $metadata = $this->exceptionResolver->getExceptionMedatada(get_class($throwable));
+
+        $message = $this->exceptionResolver->getMessage($throwable);
+
+        $responseModel = new ErrorResponse($message);
 
         if ($this->isDebug && $metadata->getHttpCode() >= Response::HTTP_INTERNAL_SERVER_ERROR) {
-            return;
+            $responseModel = new ErrorResponse($message, [
+                '_debug' => [
+                    'message' => $throwable->getMessage(),
+                    'file' => $throwable->getFile(),
+                    'line' => $throwable->getLine(),
+                    'trace' => $throwable->getTrace(),
+                ]
+            ]);
         }
 
-        $message = $this->exceptionMutator->getMessage($throwable);
-
-        $json = $this->serializer->serialize(new ErrorResponse($message), JsonEncoder::FORMAT);
+        $json = $this->serializer->serialize($responseModel, JsonEncoder::FORMAT);
         $response = new JsonResponse($json, $metadata->getHttpCode(), [], true);
 
         $event->setResponse($response);

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
+use App\Http\Attribute\RequestBody;
 use App\Domain\Service\FirstTest\FirstTestService;
+use App\Http\Request\FirstTest\CreateFirstTestRequest;
 use App\Http\Response\FirstTest\FirstTestIndexResponse;
 use App\Http\Response\FirstTest\FirstTestInfo;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -25,7 +27,7 @@ class FirstTestController extends AbstractController
         description: 'Get all FirstTest.',
         content: new OA\JsonContent(ref: new Model(type: FirstTestIndexResponse::class)),
     )]
-    #[Route('/api/v1/first-test', methods: ['GET'], name: 'api.first-test')]
+    #[Route('/api/v1/first-test', methods: ['GET'], name: 'api.first-test.index')]
     public function index(): JsonResponse
     {
         $firstTests = $this->firstTestService->findAll();
@@ -35,7 +37,7 @@ class FirstTestController extends AbstractController
         return $this->json($response);
     }
 
-    #[Route('/api/v1/first-test/{id}', methods: ['GET'], name: 'api.first-test.single')]
+    #[Route('/api/v1/first-test/{id<\d+>}', methods: ['GET'], name: 'api.first-test.single')]
     public function single(int $id): JsonResponse
     {
         $firstTest = $this->firstTestService->findById($id);
@@ -43,5 +45,11 @@ class FirstTestController extends AbstractController
         $response = new FirstTestInfo($firstTest);
 
         return $this->json($response);
+    }
+
+    #[Route('/api/v1/first-test/create', methods: ['POST'], name: 'api.first-test.create')]
+    public function create(#[RequestBody] CreateFirstTestRequest $request): JsonResponse
+    {
+        return $this->json(null);
     }
 }
