@@ -7,7 +7,10 @@ namespace App\Http\ExceptionView;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class ExceptionMutator
+/**
+ * Retrieves metadata from an exception.
+ */
+class ExceptionResolver
 {
     /** @var array<string,ExceptionMetadata> */
     /** @phpstan-var array<class-string,ExceptionMetadata> */
@@ -41,8 +44,10 @@ class ExceptionMutator
         return ExceptionMetadata::fromCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function getMessage(Throwable $throwable, ExceptionMetadata $metadata): string
+    public function getMessage(Throwable $throwable): string
     {
+        $metadata = $this->getExceptionMedatada(get_class($throwable));
+
         return $metadata->isVisible()
             ? $throwable->getMessage()
             : Response::$statusTexts[$metadata->getHttpCode()]

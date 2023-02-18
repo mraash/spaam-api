@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiExceptionListener
 {
     public function __construct(
-        private ExceptionMutator $exceptionMutator,
+        private ExceptionResolver $exceptionMutator,
         private LoggerInterface $logger,
         private SerializerInterface $serializer,
         private bool $isDebug
@@ -33,7 +33,7 @@ class ApiExceptionListener
             return;
         }
 
-        $message = $this->exceptionMutator->getMessage($throwable, $metadata);
+        $message = $this->exceptionMutator->getMessage($throwable);
 
         $json = $this->serializer->serialize(new ErrorResponse($message), JsonEncoder::FORMAT);
         $response = new JsonResponse($json, $metadata->getHttpCode(), [], true);
