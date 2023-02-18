@@ -9,3 +9,6 @@
 
 ### docker
 /volumes
+
+### phpcs
+/.phpcs-cache

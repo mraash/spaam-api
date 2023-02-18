@@ -19,7 +19,7 @@ class ApiExceptionListener
         private ExceptionResolver $exceptionResolver,
         private SerializerInterface $serializer,
         private bool $isDebug
-    ) {  
+    ) {
     }
 
     public function onException(ExceptionEvent $event): void
