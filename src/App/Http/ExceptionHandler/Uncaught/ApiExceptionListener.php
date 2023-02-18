@@ -35,6 +35,7 @@ class ApiExceptionListener
             $responseModel = new ErrorResponse($message, [
                 '_debug' => [
                     'message' => $throwable->getMessage(),
+                    'class' => $throwable::class,
                     'file' => $throwable->getFile(),
                     'line' => $throwable->getLine(),
                     'trace' => $throwable->getTrace(),

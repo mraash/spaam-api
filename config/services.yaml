@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     exceptions:
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
         App\Domain\Exception\FirstTest\FirstTestNotFoundException: { httpCode: 404, visible: true },
         SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 403, visible: true },
 
