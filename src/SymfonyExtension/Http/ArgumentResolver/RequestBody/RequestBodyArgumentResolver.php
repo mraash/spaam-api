@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ArgumentResolver\RequestBody;
+namespace SymfonyExtension\Http\ArgumentResolver\RequestBody;
 
-use App\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException;
-use App\Http\ArgumentResolver\RequestBody\Exception\ValidationException;
-use App\Http\Attribute\RequestBody;
+use SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException;
+use SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\ValidationException;
+use SymfonyExtension\Http\Attribute\RequestBody;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;

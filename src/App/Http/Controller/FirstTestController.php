@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
-use App\Http\Attribute\RequestBody;
+use SymfonyExtension\Http\Attribute\RequestBody;
 use App\Domain\Service\FirstTest\FirstTestService;
 use App\Http\Request\FirstTest\CreateFirstTestRequest;
 use App\Http\Response\FirstTest\FirstTestIndexResponse;

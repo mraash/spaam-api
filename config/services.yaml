@@ -6,7 +6,7 @@
 parameters:
     exceptions:
         App\Domain\Exception\FirstTest\FirstTestNotFoundException: { httpCode: 404, visible: true },
-        App\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 403, visible: true },
+        SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 403, visible: true },
 
 services:
     # default configuration for services in *this* file
@@ -19,11 +19,13 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
+        resource: '../src/App/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Domain/Entity/'
-            - '../src/Kernel.php'
+            - '../src/App/DependencyInjection/'
+            - '../src/App/Domain/Entity/'
+            - '../src/App/Kernel.php'
+    SymfonyExtension\:
+        resource: '../src/SymfonyExtension/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

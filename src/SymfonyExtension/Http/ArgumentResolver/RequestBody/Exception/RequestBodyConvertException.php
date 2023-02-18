@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ArgumentResolver\RequestBody\Exception;
+namespace SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception;
 
 use RuntimeException;
 

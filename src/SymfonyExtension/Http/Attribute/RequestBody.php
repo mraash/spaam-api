@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Attribute;
+namespace SymfonyExtension\Http\Attribute;
 
 use Attribute;
 
