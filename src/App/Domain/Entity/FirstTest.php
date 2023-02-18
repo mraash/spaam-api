@@ -22,13 +22,15 @@ class FirstTest
     #[ORM\Column]
     private ?bool $propertyBool = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
+        /** @var int */
         return $this->id;
     }
 
-    public function getPropertyStr(): ?string
+    public function getPropertyStr(): string
     {
+        /** @var string */
         return $this->propertyStr;
     }
 
@@ -39,8 +41,9 @@ class FirstTest
         return $this;
     }
 
-    public function getPropertyInt(): ?int
+    public function getPropertyInt(): int
     {
+        /** @var int */
         return $this->propertyInt;
     }
 
@@ -51,8 +54,9 @@ class FirstTest
         return $this;
     }
 
-    public function isPropertyBool(): ?bool
+    public function isPropertyBool(): bool
     {
+        /** @var bool */
         return $this->propertyBool;
     }
 

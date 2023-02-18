@@ -6,6 +6,7 @@ namespace App\Http\ExceptionHandler\Validation;
 
 use SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\ValidationException;
 use App\Http\Response\Error\ErrorResponse;
+use Stringable;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,9 @@ class ValidationExceptionListener
         $event->setResponse($response);
     }
 
+    /**
+     * @return array<int,array<string,string>>
+     */
     private function getPrettyViolations(ConstraintViolationListInterface $violations): array
     {
         $violationsList = [];
@@ -55,11 +59,21 @@ class ValidationExceptionListener
         return $violationsList;
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function getPrettyViolation(ConstraintViolationInterface $violation): array
     {
+        $propertyPath = $violation->getPropertyPath();
+        $message = $violation->getMessage();
+
+        if ($message instanceof Stringable) {
+            $message = $message->__toString();
+        }
+
         return [
-            'propertyPath' => $violation->getPropertyPath(),
-            'message' => $violation->getMessage(),
+            'propertyPath' => $propertyPath,
+            'message' => $message,
         ];
     }
 }

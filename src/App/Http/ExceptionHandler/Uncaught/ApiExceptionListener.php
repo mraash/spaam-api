@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\ExceptionHandler\Uncaught;
 
 use App\Http\Response\Error\ErrorResponse;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,6 @@ class ApiExceptionListener
 {
     public function __construct(
         private ExceptionResolver $exceptionResolver,
-        private LoggerInterface $logger,
         private SerializerInterface $serializer,
         private bool $isDebug
     ) {  

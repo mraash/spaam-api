@@ -6,6 +6,9 @@ namespace App\Http\Response\Error;
 
 class ErrorResponse
 {
+    /**
+     * @param mixed[] $details
+     */
     public function __construct(
         private string $message,
         private ?array $details = null,
@@ -17,6 +20,9 @@ class ErrorResponse
         return $this->message;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getDetails(): ?array
     {
         return $this->details;

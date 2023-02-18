@@ -23,18 +23,24 @@ class RequestBodyArgumentResolver implements ValueResolverInterface
     ) {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         if (count($argument->getAttributes(RequestBody::class, ArgumentMetadata::IS_INSTANCEOF)) < 1) {
             return [];
         }
 
+        $content = $request->getContent();
+        $type = $argument->getType();
+
+        if ($type === null) {
+            return [];
+        }
+
         try {
-            $customRequest = $this->serializer->deserialize(
-                $request->getContent(),
-                $argument->getType(),
-                JsonEncoder::FORMAT
-            );
+            $customRequest = $this->serializer->deserialize($content, $type, JsonEncoder::FORMAT);
         }
         catch (Throwable) {
             throw new RequestBodyConvertException();

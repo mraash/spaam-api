@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\ExceptionHandler\Uncaught;
 
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -28,6 +29,14 @@ class ExceptionResolver
         foreach ($rawMetadataList as $class => $exceptionData) {
             $code = $exceptionData['httpCode'] ?? null;
             $hidden = $exceptionData['visible'] ?? null;
+
+            if (!is_int($code)) {
+                throw new InvalidArgumentException('$rawMetadataList.*.httpCode should be of integer type.');
+            }
+
+            if (!is_bool($hidden)) {
+                throw new InvalidArgumentException('$rawMetadataList.*.visible should be of boolean type.');
+            }
 
             $this->metadataList[$class] = new ExceptionMetadata($code, $hidden);
         }
