@@ -35,7 +35,7 @@ class FirstTestController extends AbstractController
         return $this->json($response);
     }
 
-    #[Route('/api/v1/first-test/{id}', methods: ['GET'], name: 'api.first-test')]
+    #[Route('/api/v1/first-test/{id}', methods: ['GET'], name: 'api.first-test.single')]
     public function single(int $id): JsonResponse
     {
         $firstTest = $this->firstTestService->findById($id);
