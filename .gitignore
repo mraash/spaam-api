@@ -7,8 +7,12 @@
 /var/
 /vendor/
 
+### squizlabs/php_codesniffer
+/.phpcs-cache
+
 ### data
 /storage/
 
-### phpcs
-/.phpcs-cache
+### debug
+*Exxample*/
+*Exxample*.php
