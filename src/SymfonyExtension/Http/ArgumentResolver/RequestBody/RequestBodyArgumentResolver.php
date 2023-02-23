@@ -42,8 +42,8 @@ class RequestBodyArgumentResolver implements ValueResolverInterface
         try {
             $customRequest = $this->serializer->deserialize($content, $type, JsonEncoder::FORMAT);
         }
-        catch (Throwable) {
-            throw new RequestBodyConvertException();
+        catch (Throwable $err) {
+            throw new RequestBodyConvertException($err);
         }
 
         $validationErrors = $this->validator->validate($customRequest);

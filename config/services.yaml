@@ -6,7 +6,8 @@
 parameters:
     exceptions:
         Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
-        SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 403, visible: true },
+        SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
+        App\Domain\Service\Auth\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
 
 services:
     # default configuration for services in *this* file
@@ -14,7 +15,8 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
-            bool $isDebug: '%kernel.debug%'
+            bool $isDev: '%kernel.debug%'
+            bool $isDebug: false
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -18,12 +18,17 @@ class ApiExceptionListener
     public function __construct(
         private ExceptionResolver $exceptionResolver,
         private SerializerInterface $serializer,
+        private bool $isDev,
         private bool $isDebug
     ) {
     }
 
     public function onException(ExceptionEvent $event): void
     {
+        if ($this->isDebug) {
+            return;
+        }
+
         $throwable = $event->getThrowable();
         $metadata = $this->exceptionResolver->getExceptionMedatada(get_class($throwable));
 
@@ -31,7 +36,7 @@ class ApiExceptionListener
 
         $responseModel = new ErrorResponse($message);
 
-        if ($this->isDebug && $metadata->getHttpCode() >= Response::HTTP_INTERNAL_SERVER_ERROR) {
+        if ($this->isDev) {
             $responseModel = new ErrorResponse($message, [
                 '_debug' => [
                     'message' => $throwable->getMessage(),
