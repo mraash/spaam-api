@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace App\Http\ExceptionHandler\Uncaught;
 
 use App\Http\Response\Error\ErrorResponse;
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[AsEventListener(ExceptionEvent::class, method: 'onException', priority: 10)]
 class ApiExceptionListener
 {
     public function __construct(
@@ -23,7 +20,7 @@ class ApiExceptionListener
     ) {
     }
 
-    public function onException(ExceptionEvent $event): void
+    public function __invoke(ExceptionEvent $event): void
     {
         if ($this->isDebug) {
             return;

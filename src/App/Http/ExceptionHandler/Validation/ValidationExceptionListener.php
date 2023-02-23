@@ -7,7 +7,6 @@ namespace App\Http\ExceptionHandler\Validation;
 use SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\ValidationException;
 use App\Http\Response\Error\ErrorResponse;
 use Stringable;
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -16,7 +15,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-#[AsEventListener(ExceptionEvent::class, method: 'onException', priority: 15)]
 class ValidationExceptionListener
 {
     public function __construct(
@@ -24,7 +22,7 @@ class ValidationExceptionListener
     ) {
     }
 
-    public function onException(ExceptionEvent $event): void
+    public function __invoke(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
 
