@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Security;
+namespace App\Security;
 
 use App\Domain\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
@@ -13,12 +13,9 @@ class JwtCreatedListener
     {
         /** @var User */
         $user = $event->getUser();
+        $payload = $event->getData();
 
-        $payload = [
-            'id' => $user->getId(),
-            'username' => $user->getEmail(),
-            'roles' => $user->getRoles(),
-        ];
+        $payload['id'] = $user->getId();
 
         $event->setData($payload);
     }

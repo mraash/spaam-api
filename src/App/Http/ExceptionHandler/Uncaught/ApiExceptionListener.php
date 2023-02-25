@@ -7,8 +7,11 @@ namespace App\Http\ExceptionHandler\Uncaught;
 use App\Http\Response\Error\ErrorResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
+use Throwable;
 
 class ApiExceptionListener
 {
@@ -27,6 +30,11 @@ class ApiExceptionListener
         }
 
         $throwable = $event->getThrowable();
+
+        if ($this->isSecurityException($throwable)) {
+            return;
+        }
+
         $metadata = $this->exceptionResolver->getExceptionMedatada(get_class($throwable));
 
         $message = $this->exceptionResolver->getMessage($throwable);
@@ -49,5 +57,11 @@ class ApiExceptionListener
         $response = new JsonResponse($json, $metadata->getHttpCode(), [], true);
 
         $event->setResponse($response);
+    }
+
+    private function isSecurityException(Throwable $throwable): bool
+    {
+        return $throwable instanceof AuthenticationException
+            || $throwable instanceof AccessDeniedException;
     }
 }
