@@ -7,7 +7,7 @@ parameters:
     exceptions:
         Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
         SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
-        App\Domain\Service\Auth\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
+        App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
 
 services:
     # default configuration for services in *this* file

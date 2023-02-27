@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Auth;
+namespace App\Domain\Service\User;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepository;
-use App\Domain\Service\Auth\Exceptions\UserAlreadyExistsException;
+use App\Domain\Service\User\Exceptions\UserAlreadyExistsException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class RegistrationService
+class AccountFactory
 {
     public function __construct(
         private UserRepository $userRepository,
@@ -17,7 +17,7 @@ class RegistrationService
     ) {
     }
 
-    public function register(string $email, string $plainPassword): User
+    public function createAccount(string $email, string $plainPassword): User
     {
         if ($this->userRepository->findByEmail($email) !== null) {
             throw new UserAlreadyExistsException();

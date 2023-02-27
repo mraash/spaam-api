@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controller\Auth;
 
-use App\Domain\Service\Auth\RegistrationService;
+use App\Domain\Service\User\AccountFactory;
 use App\Http\Request\Auth\RegisterRequest;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyExtension\Http\Attribute\RequestBody;
@@ -16,7 +15,7 @@ use SymfonyExtension\Http\Attribute\RequestBody;
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        private RegistrationService $registrationService,
+        private AccountFactory $accountFactory,
         private AuthenticationSuccessHandler $authenticationSuccessHandler
     ) {
     }
@@ -27,7 +26,7 @@ class RegistrationController extends AbstractController
         $email = (string) $request->email;
         $password = (string) $request->password;
 
-        $user = $this->registrationService->register($email, $password);
+        $user = $this->accountFactory->createAccount($email, $password);
 
         $response = $this->authenticationSuccessHandler->handleAuthenticationSuccess($user);
 

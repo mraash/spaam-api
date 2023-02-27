@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Service\Auth\Exceptions;
+namespace App\Domain\Service\User\Exceptions;
 
 use RuntimeException;
 
