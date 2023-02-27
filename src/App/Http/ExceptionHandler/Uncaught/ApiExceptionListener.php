@@ -31,10 +31,6 @@ class ApiExceptionListener
 
         $throwable = $event->getThrowable();
 
-        if ($this->isSecurityException($throwable)) {
-            return;
-        }
-
         $metadata = $this->exceptionResolver->getExceptionMedatada(get_class($throwable));
 
         $message = $this->exceptionResolver->getMessage($throwable);
@@ -57,11 +53,5 @@ class ApiExceptionListener
         $response = new JsonResponse($json, $metadata->getHttpCode(), [], true);
 
         $event->setResponse($response);
-    }
-
-    private function isSecurityException(Throwable $throwable): bool
-    {
-        return $throwable instanceof AuthenticationException
-            || $throwable instanceof AccessDeniedException;
     }
 }
