@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controller\Auth;
 
 use App\Domain\Service\User\AccountFactory;
-use App\Http\Request\Auth\RegisterRequest;
+use App\Http\Request\Auth\RegisterInput;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use SymfonyExtension\Http\Attribute\Input\RequestBody;
 
 class RegistrationController extends AbstractController
 {
@@ -21,10 +20,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/v1/auth/register', methods: 'POST', name: 'api.auth.register')]
-    public function register(#[RequestBody] RegisterRequest $request): Response
+    public function register(RegisterInput $input): Response
     {
-        $email = (string) $request->email;
-        $password = (string) $request->password;
+        $email = $input->getEmail();
+        $password = $input->getPssword();
 
         $user = $this->accountFactory->createAccount($email, $password);
 
