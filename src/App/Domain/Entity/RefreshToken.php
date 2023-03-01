@@ -24,7 +24,8 @@ class RefreshToken extends EntityRefreshToken
 
     public static function createForUserWithTtl(string $refreshToken, UserInterface $user, int $ttl): RefreshTokenInterface
     {
-        /** @var RefreshToken */
+        /** @var User $user */
+        /** @var RefreshToken $token */
         $token = parent::createForUserWithTtl($refreshToken, $user, $ttl);
         $token->setUser($user);
 

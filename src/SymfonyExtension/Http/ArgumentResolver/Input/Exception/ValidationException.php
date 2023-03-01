@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception;
+namespace SymfonyExtension\Http\ArgumentResolver\Input\Exception;
 
 use RuntimeException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

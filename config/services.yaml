@@ -11,7 +11,7 @@ parameters:
         Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
         Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
 
-        SymfonyExtension\Http\ArgumentResolver\RequestBody\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
+        SymfonyExtension\Http\ArgumentResolver\Input\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
         App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
 
 services:

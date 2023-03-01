@@ -10,7 +10,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\Authentica
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use SymfonyExtension\Http\Attribute\RequestBody;
+use SymfonyExtension\Http\Attribute\Input\RequestBody;
 
 class RegistrationController extends AbstractController
 {
