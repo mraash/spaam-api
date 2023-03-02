@@ -13,6 +13,7 @@ parameters:
 
         SymfonyExtension\Http\ArgumentResolver\Input\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
         App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
+        App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAdded: { httpCode: 400, visible: true },
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +24,7 @@ services:
             bool $isDev: '@=container.getParameter("kernel.environment") == "dev"'
             bool $isProd: '@=container.getParameter("kernel.environment") == "prod"'
             bool $isDebug: '%kernel.debug%'
+            int $vkAppId: '%env(MY_VK_APP)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
