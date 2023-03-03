@@ -8,7 +8,7 @@ use App\Domain\Entity\User;
 use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\VkAccountRepository;
 use App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAdded;
-use App\Outside\VkApi\VkApi;
+use App\Integration\VkApi\VkApi;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VkAccountService
