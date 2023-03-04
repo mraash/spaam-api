@@ -1,22 +1,19 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     exceptions:
+        # Symfony exceptions
         Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
+        Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException: { httpCode: 405, visible: true },
 
         # Temporarily customize authentication errors
         Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
         Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
 
+        # App exceptions
         SymfonyExtension\Http\ArgumentResolver\Input\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
         App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
         App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAdded: { httpCode: 400, visible: true },
 
 services:
-    # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -26,8 +23,7 @@ services:
             bool $isDebug: '%kernel.debug%'
             int $vkAppId: '%env(MY_VK_APP)%'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+    # Namespaces
     App\:
         resource: '../src/App/'
         exclude:
@@ -36,14 +32,13 @@ services:
     SymfonyExtension\:
         resource: '../src/SymfonyExtension/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
 
+    # Services
     App\Http\ExceptionHandler\Uncaught\ExceptionResolver:
         arguments:
             $rawMetadataList: '%exceptions%'
 
-    # listeners
+    # Listeners
     App\Http\ExceptionHandler\Uncaught\ApiExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 10 }

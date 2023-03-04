@@ -2,9 +2,9 @@
 
 namespace App\Domain\Entity;
 
-use App\Repository\Domain\Entity\VkAccountRepository;
+use App\Domain\Entity\User;
+use App\Domain\Repository\VkAccountRepository;
 use Doctrine\ORM\Mapping as ORM;
-use \App\Domain\Entity\User;
 
 #[ORM\Entity(repositoryClass: VkAccountRepository::class)]
 class VkAccount

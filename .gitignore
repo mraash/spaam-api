@@ -7,15 +7,22 @@
 /var/
 /vendor/
 
+### app
+/storage/
+/.coverage/
+*Exxample*/
+*Exxample*.php
+
 ### squizlabs/php_codesniffer
 /.phpcs-cache
 
 ###> lexik/jwt-authentication-bundle
 /config/jwt/*.pem
 
-### data
-/storage/
+### symfony/phpunit-bridge
+.phpunit.result.cache
+/phpunit.xml
 
-### debug
-*Exxample*/
-*Exxample*.php
+### phpunit/phpunit
+/phpunit.xml
+.phpunit.result.cache

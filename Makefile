@@ -11,4 +11,4 @@ phpunit:
 	php vendor/bin/phpunit
 
 phpunit-curr:
-	php vendor/bin/phpunit tests/app/Functional/UserController/SingleTest.php
+	php vendor/bin/phpunit tests/App/Functional/Http/VkAccount/GetLinkTest.php
