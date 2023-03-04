@@ -29,9 +29,14 @@ services:
         exclude:
             - '../src/App/Domain/Entity/'
             - '../src/App/Kernel.php'
+    Tests\App\Mock\:
+        resource: '../tests/App/Mock'
     SymfonyExtension\:
         resource: '../src/SymfonyExtension/'
 
+
+    # Integrations
+    App\Integration\VkApi\VkApiInterface: '@App\Integration\VkApi\VkApi'
 
     # Services
     App\Http\ExceptionHandler\Uncaught\ExceptionResolver:

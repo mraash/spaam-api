@@ -1,0 +1,2 @@
+services:
+    App\Integration\VkApi\VkApiInterface: '@Tests\App\Mock\Integration\VkApi\VkApiMock'

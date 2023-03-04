@@ -12,11 +12,12 @@
 /.coverage/
 *Exxample*/
 *Exxample*.php
+Makefile
 
 ### squizlabs/php_codesniffer
 /.phpcs-cache
 
-###> lexik/jwt-authentication-bundle
+### lexik/jwt-authentication-bundle
 /config/jwt/*.pem
 
 ### symfony/phpunit-bridge

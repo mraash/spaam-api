@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Integration\VkApi;
 
-class VkApi
+class VkApi implements VkApiInterface
 {
     private const API_VERSION = '5.131';
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Http\VkAccount;
 
-use Tests\App\Functional\AbstractWebTestCase;
+use Tests\App\Functional\Http\AbstractWebTestCase;
 
 class GetLinkTest extends AbstractWebTestCase
 {

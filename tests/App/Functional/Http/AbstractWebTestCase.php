@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional;
+namespace Tests\App\Functional\Http;
 
 use App\Domain\Entity\User;
 use Doctrine\ORM\EntityManager;
