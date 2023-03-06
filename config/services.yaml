@@ -11,7 +11,8 @@ parameters:
         # App exceptions
         SymfonyExtension\Http\ArgumentResolver\Input\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
         App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
-        App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAdded: { httpCode: 400, visible: true },
+        App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException: { httpCode: 400, visible: true },
+        App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException: { httpCode: 404, visible: true },
 
 services:
     _defaults:

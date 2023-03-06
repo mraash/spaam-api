@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Http\VkAccount;
 
-use Tests\App\Functional\Http\AbstractWebTestCase;
-
-class GetLinkTest extends AbstractWebTestCase
+class GetLinkTest extends AbstractVkAccountTest
 {
     private const METHOD = 'GET';
     private const URI = '/v1/vk-accounts/link';
 
     public function test_successful(): void
     {
-        $this->loginUser();
-        $this->client->request(self::METHOD, self::URI);
+        $this->createAndLoginUser();
+        $this->getClient()->request(self::METHOD, self::URI);
 
-        $response = $this->client->getResponse();
+        $response = $this->getClient()->getResponse();
         $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseIsSuccessful();

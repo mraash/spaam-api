@@ -16,9 +16,9 @@ abstract class AbstractWebTestCase extends WebTestCase
 {
     use JsonAssertions;
 
-    protected KernelBrowser $client;
-    protected EntityManager $em;
-    protected EntityRepository $repository;
+    private KernelBrowser $client;
+    private EntityManager $em;
+    private EntityRepository $repository;
 
     protected function setUp(): void
     {
@@ -43,24 +43,55 @@ abstract class AbstractWebTestCase extends WebTestCase
 
         unset($this->client);
         unset($this->em);
+        unset($this->repository);
     }
 
+    protected function getRepository(): EntityRepository
+    {
+        // TODO: Throw and exception if $this->getEntityClass() returns null.
+        return $this->repository;
+    }
+
+    protected function getClient(): KernelBrowser
+    {
+        return $this->client;
+    }
+
+    protected function getEntityManager(): EntityManager
+    {
+        return $this->em;
+    }
+
+    /**
+     * Required for the repository.
+     *
+     * If returns null, the $this->getRepository() method will not be available.
+     */
     protected function getEntityClass(): ?string
     {
         return null;
     }
 
-    protected function loginUser(): User
+    protected function createUser(string $email = null): User
     {
+        $email = $email ?? 'test1@test.com';
+
         $user = new User();
 
         $user
-            ->setEmail('test1@test.com')
+            ->setEmail($email)
             ->setPassword('123')
         ;
 
         $this->em->persist($user);
         $this->em->flush();
+
+        return $user;
+    }
+
+    protected function createAndLoginUser(string $email = null): User
+    {
+        $user = $this->createUser($email);
 
         $this->client->loginUser($user);
 

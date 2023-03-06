@@ -6,7 +6,7 @@ namespace App\Domain\Service\VkAccount\Exception;
 
 use RuntimeException;
 
-class VkAccountAlreadyAdded extends RuntimeException
+class VkAccountAlreadyAddedException extends RuntimeException
 {
     public function __construct()
     {
