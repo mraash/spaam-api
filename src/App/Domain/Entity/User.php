@@ -30,6 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    /** @var Collection<int,VkAccount> */
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: VkAccount::class, orphanRemoval: true)]
     private Collection $vkAccounts;
 

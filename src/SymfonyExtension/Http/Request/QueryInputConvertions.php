@@ -6,17 +6,25 @@ namespace SymfonyExtension\Http\Request;
 
 trait QueryInputConvertions
 {
-    protected function strToInt(string $value): string|int
+    protected function strToInt(mixed $value): mixed
     {
+        if (!is_string($value)) {
+            return $value;
+        }
+
         if (preg_match('/^[0-9]+$/', $value) === 1) {
-            return $value + 0;
+            return intval($value);
         }
 
         return $value;
     }
 
-    protected function strToBool(string $value): string|bool
+    protected function strToBool(mixed $value): mixed
     {
+        if (!is_string($value)) {
+            return $value;
+        }
+
         if ($value === '1' || $value === 'true') {
             return true;
         }

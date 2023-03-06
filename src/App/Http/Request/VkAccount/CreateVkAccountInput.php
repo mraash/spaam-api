@@ -40,6 +40,7 @@ class CreateVkAccountInput
 
     public function getUserId(): int
     {
+        /** @var int */
         return $this->user_id;
     }
 }

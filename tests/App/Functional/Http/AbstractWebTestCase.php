@@ -8,9 +8,11 @@ use App\Domain\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Helmich\JsonAssert\JsonAssertions;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use UnexpectedValueException;
 
 abstract class AbstractWebTestCase extends WebTestCase
 {
@@ -18,20 +20,25 @@ abstract class AbstractWebTestCase extends WebTestCase
 
     private KernelBrowser $client;
     private EntityManager $em;
-    private EntityRepository $repository;
+    /** @var EntityRepository<object> */
+    private ?EntityRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $client = self::createClient();
+
+        /** @var EntityManager */
+        $em = self::getContainer()->get('doctrine.orm.entity_manager');
+
         $entityClass = $this->getEntityClass();
 
-        $this->client = self::createClient();
-        /** @var EntityManager */
-        $this->em = self::getContainer()->get('doctrine.orm.entity_manager');
+        $this->client = $client;
+        $this->em = $em;
 
         if (is_string($entityClass)) {
-            $this->repository = $this->em->getRepository($entityClass);
+            $this->repository = $em->getRepository($entityClass);
         }
     }
 
@@ -46,9 +53,15 @@ abstract class AbstractWebTestCase extends WebTestCase
         unset($this->repository);
     }
 
+    /**
+     * @return EntityRepository<object>
+     */
     protected function getRepository(): EntityRepository
     {
-        // TODO: Throw and exception if $this->getEntityClass() returns null.
+        if ($this->repository === null) {
+            throw new LogicException('Before using repository, add getEntityClass method.');
+        }
+
         return $this->repository;
     }
 
@@ -66,6 +79,8 @@ abstract class AbstractWebTestCase extends WebTestCase
      * Required for the repository.
      *
      * If returns null, the $this->getRepository() method will not be available.
+     *
+     * @phpstan-return class-string|null
      */
     protected function getEntityClass(): ?string
     {
