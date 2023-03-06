@@ -22,8 +22,11 @@ class RefreshToken extends EntityRefreshToken
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeInterface $createdAt;
 
-    public static function createForUserWithTtl(string $refreshToken, UserInterface $user, int $ttl): RefreshTokenInterface
-    {
+    public static function createForUserWithTtl(
+        string $refreshToken,
+        UserInterface $user,
+        int $ttl
+    ): RefreshTokenInterface {
         /** @var User $user */
         /** @var RefreshToken $token */
         $token = parent::createForUserWithTtl($refreshToken, $user, $ttl);

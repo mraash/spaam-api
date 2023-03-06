@@ -41,7 +41,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
      */
     public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        return parent::findOneBy($criteria,$orderBy);
+        return parent::findOneBy($criteria, $orderBy);
     }
 
     /**
