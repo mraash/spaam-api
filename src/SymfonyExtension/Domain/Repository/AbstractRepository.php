@@ -13,10 +13,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @phpstan-method void save(TEntity $entity)
  * @phpstan-method void remove(TEntity $entity)
  *
- * @phpstan-method TEntity|null find(int $id, ?int $lockMode, ?int $lockVersion)
- * @phpstan-method TEntity|null findOneBy(array $criteria, ?array $orderBy)
+ * @phpstan-method TEntity|null findOneById(int $id)
+ * @phpstan-method TEntity|null findOneBy(array $criteria, array $orderBy = null)
  * @phpstan-method TEntity[]    findAll()
- * @phpstan-method TEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @phpstan-method TEntity[]    findListBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 abstract class AbstractRepository extends ServiceEntityRepository
 {
@@ -26,18 +26,56 @@ abstract class AbstractRepository extends ServiceEntityRepository
     }
 
     /**
-     * @phpstan-param TEntity $entity
+     * @phpstan-return ?TEntity $entity
      */
-    public function save(object $entity): void
+    public function findOneById(int $id): ?object
     {
-        $this->getEntityManager()->persist($entity);
+        return parent::find($id);
     }
 
     /**
-     * @phpstan-param TEntity $entity
+     * @param array<string,mixed> $criteria
+     * @param array<string,string>|null $orderBy
+     *
+     * @phpstan-return ?TEntity $entity
      */
-    public function remove(object $entity): void
+    public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        $this->getEntityManager()->remove($entity);
+        return parent::findOneBy($criteria,$orderBy);
+    }
+
+    /**
+     * @phpstan-return TEntity[] $entity
+     */
+    public function findAll(): array
+    {
+        return parent::findAll();
+    }
+
+    /**
+     * @param array<string,mixed> $criteria
+     * @param array<string,string>|null $orderBy
+     *
+     * @phpstan-return TEntity[] $entity
+     */
+    public function findListBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array
+    {
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * @deprecated
+     */
+    public function find(mixed $id, mixed $lockMode = null, mixed $lockVersion = null): ?object
+    {
+        return parent::find($id, $lockMode, $lockVersion);
+    }
+
+    /**
+     * @deprecated
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): array
+    {
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
 }

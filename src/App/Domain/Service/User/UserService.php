@@ -19,7 +19,7 @@ class UserService
 
     public function createAccount(string $email, string $plainPassword): User
     {
-        if ($this->userRepository->findByEmail($email) !== null) {
+        if ($this->userRepository->findOneByEmail($email) !== null) {
             throw new UserAlreadyExistsException();
         }
 

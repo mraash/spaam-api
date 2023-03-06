@@ -10,19 +10,26 @@ use SymfonyExtension\Domain\Repository\AbstractRepository;
 /**
  * @extends AbstractRepository<VkAccount>
  *
- * @method void save(VkAccount $entity)
- * @method void remove(VkAccount $entity)
- *
- * @method VkAccount|null find(int $id, ?int $lockMode, ?int $lockVersion)
- * @method VkAccount|null findOneBy(array $criteria, ?array $orderBy)
+ * @method VkAccount|null findOneById(int $id)
+ * @method VkAccount|null findOneBy(array $criteria, array $orderBy = null)
  * @method VkAccount[]    findAll()
- * @method VkAccount[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method VkAccount[]    findListBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class VkAccountRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, VkAccount::class);
+    }
+
+    public function save(VkAccount $vkAccount): void
+    {
+        $this->getEntityManager()->persist($vkAccount);
+    }
+
+    public function remove(VkAccount $vkAccount): void
+    {
+        $this->getEntityManager()->remove($vkAccount);
     }
 
     public function findByVkId(User $owner, int $vkId): ?VkAccount
