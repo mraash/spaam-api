@@ -9,7 +9,7 @@ use App\Domain\Repository\UserRepository;
 use App\Domain\Service\User\Exceptions\UserAlreadyExistsException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AccountFactory
+class UserService
 {
     public function __construct(
         private UserRepository $userRepository,

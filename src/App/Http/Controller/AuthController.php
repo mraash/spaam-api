@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
-use App\Domain\Service\User\AccountFactory;
+use App\Domain\Service\User\UserService;
 use App\Http\Request\Auth\RegisterInput;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use LogicException;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends AbstractController
 {
     public function __construct(
-        private AccountFactory $accountFactory,
+        private UserService $userService,
         private AuthenticationSuccessHandler $authenticationSuccessHandler,
     ) {
     }
@@ -26,7 +26,7 @@ class AuthController extends AbstractController
         $email = $input->getEmail();
         $password = $input->getPssword();
 
-        $user = $this->accountFactory->createAccount($email, $password);
+        $user = $this->userService->createAccount($email, $password);
 
         $response = $this->authenticationSuccessHandler->handleAuthenticationSuccess($user);
 
