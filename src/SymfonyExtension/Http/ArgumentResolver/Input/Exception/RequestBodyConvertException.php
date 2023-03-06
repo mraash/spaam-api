@@ -10,7 +10,7 @@ use Throwable;
 class RequestBodyConvertException extends RuntimeException
 {
     public function __construct(
-        private Throwable $serializationException
+        private Throwable $serializationException,
     ) {
         parent::__construct('Invalid request format.');
     }

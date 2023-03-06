@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 class ValidationExceptionListener
 {
     public function __construct(
-        private SerializerInterface $serializer
+        private SerializerInterface $serializer,
     ) {
     }
 

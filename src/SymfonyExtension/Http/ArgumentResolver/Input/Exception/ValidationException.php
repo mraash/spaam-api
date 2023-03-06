@@ -10,7 +10,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 class ValidationException extends RuntimeException
 {
     public function __construct(
-        private ConstraintViolationListInterface $violations
+        private ConstraintViolationListInterface $violations,
     ) {
         parent::__construct('Invalid request.');
     }

@@ -9,7 +9,7 @@ use Attribute;
 abstract class AbstractAsInput
 {
     public function __construct(
-        public bool $validate = true
+        public bool $validate = true,
     ) {
     }
 }

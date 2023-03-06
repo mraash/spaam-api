@@ -16,11 +16,11 @@ class AuthController extends AbstractController
 {
     public function __construct(
         private AccountFactory $accountFactory,
-        private AuthenticationSuccessHandler $authenticationSuccessHandler
+        private AuthenticationSuccessHandler $authenticationSuccessHandler,
     ) {
     }
 
-    #[Route('/v1/auth/register', methods: 'POST', name: 'api.auth.register')]
+    #[Route('/v1/auth/register', methods: 'POST', name: 'api.v1.auth.register')]
     public function register(RegisterInput $input): Response
     {
         $email = $input->getEmail();
@@ -33,14 +33,14 @@ class AuthController extends AbstractController
         return $response;
     }
 
-    #[Route('/v1/auth/login', methods: 'GET', name: 'api.auth.login')]
+    #[Route('/v1/auth/login', methods: 'GET', name: 'api.v1.auth.login')]
     public function login(): never
     {
         // Route is activated in config/packages/security.yaml
         throw new LogicException('This method should not be called.');
     }
 
-    #[Route('/v1/auth/token/refresh', methods: 'POST', name: 'api.auth.token.refresh')]
+    #[Route('/v1/auth/token/refresh', methods: 'POST', name: 'api.v1.auth.token.refresh')]
     public function refreshToken(): never
     {
         // Route is activated in config/packages/security.yaml

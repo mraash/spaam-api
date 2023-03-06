@@ -24,7 +24,7 @@ class InputArgumentResolver implements ValueResolverInterface
     public function __construct(
         private SerializerInterface $serializer,
         private DenormalizerInterface $denormalizer,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
     ) {
     }
 

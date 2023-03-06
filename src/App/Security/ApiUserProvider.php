@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ApiUserProvider implements PayloadAwareUserProviderInterface
 {
     public function __construct(
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
     ) {
     }
 

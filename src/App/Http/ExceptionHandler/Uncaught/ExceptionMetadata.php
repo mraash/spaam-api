@@ -8,7 +8,7 @@ class ExceptionMetadata
 {
     public function __construct(
         private int $httpCode,
-        private bool $isVisible
+        private bool $isVisible,
     ) {
     }
 

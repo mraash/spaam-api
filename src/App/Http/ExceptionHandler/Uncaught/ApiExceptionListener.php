@@ -15,7 +15,7 @@ class ApiExceptionListener
     public function __construct(
         private ExceptionResolver $exceptionResolver,
         private SerializerInterface $serializer,
-        private bool $isDebug
+        private bool $isDebug,
     ) {
     }
 

@@ -20,7 +20,7 @@ class VkAccountController extends AbstractController
     ) {
     }
 
-    #[Route('/v1/vk-accounts/link', methods: 'GET', name: 'api.vkAccounts.link')]
+    #[Route('/v1/vk-accounts/link', methods: 'GET', name: 'api.v1.vkAccounts.link')]
     public function link(): JsonResponse
     {
         $link = $this->vkAccountService->getCreationLink();
@@ -28,7 +28,7 @@ class VkAccountController extends AbstractController
         return $this->json(new CreationLinkResponse($link));
     }
 
-    #[Route('/v1/vk-accounts/create', methods: 'GET', name: 'api.vkAccounts.create')]
+    #[Route('/v1/vk-accounts/create', methods: 'GET', name: 'api.v1.vkAccounts.create')]
     public function create(CreateVkAccountInput $input): JsonResponse
     {
         $vkId = $input->getUserId();
@@ -41,7 +41,7 @@ class VkAccountController extends AbstractController
         return $this->json(new VkAccountCreatedResponse($vkAccount));
     }
 
-    #[Route('/v1/vk-accounts/{id<\d+>}', methods: 'DELETE', name: 'api.vkAccounts.delete')]
+    #[Route('/v1/vk-accounts/{id<\d+>}', methods: 'DELETE', name: 'api.v1.vkAccounts.delete')]
     public function delete(int $id): JsonResponse
     {
         $user = $this->getUser();

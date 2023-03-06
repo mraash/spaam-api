@@ -25,7 +25,7 @@ class VkAccountService
 
     public function getCreationLink(): string
     {
-        $redirectUrl = $this->urlGenerator->generate('api.vkAccounts.create', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $redirectUrl = $this->urlGenerator->generate('api.v1.vkAccounts.create', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
         if ($this->isDev) {
             $redirectUrl = null;
