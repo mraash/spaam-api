@@ -7,9 +7,9 @@ parameters:
         - ./src/**/Exxample*.php
         - ./tests/**/Exxample*.php
     ignoreErrors:
-        - '#Cannot cast mixed to int#'
-        - '#Cannot cast mixed to float#'
-        - '#Cannot cast mixed to string#'
-        - '#Cannot cast mixed to bool#'
+        - '#Cannot cast mixed to (int|float|string|bool)#'
         - "#Strict comparison using === between mixed and '' will always evaluate to false#"
+        -
+            message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read#'
+            path: ./src/App/Domain/Entity/
     reportUnmatchedIgnoredErrors: false

@@ -12,8 +12,8 @@ use SymfonyExtension\Domain\Repository\AbstractRepository;
  *
  * @method VkAccount|null findOneById(int $id)
  * @method VkAccount|null findOneBy(array $criteria, array $orderBy = null)
- * @method VkAccount[]    findAll()
- * @method VkAccount[]    findListBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method VkAccount[] findAll()
+ * @method VkAccount[] findListBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
  */
 class VkAccountRepository extends AbstractRepository
 {
@@ -32,7 +32,15 @@ class VkAccountRepository extends AbstractRepository
         $this->getEntityManager()->remove($vkAccount);
     }
 
-    public function findByVkId(User $owner, int $vkId): ?VkAccount
+    public function findOneByIdWithOwner(User $owner, int $id): ?VkAccount
+    {
+        return $this->findOneBy([
+            'owner' => $owner,
+            'id' => $id,
+        ]);
+    }
+
+    public function findOneByVkIdWithOwner(User $owner, int $vkId): ?VkAccount
     {
         return $this->findOneBy([
             'owner' => $owner,

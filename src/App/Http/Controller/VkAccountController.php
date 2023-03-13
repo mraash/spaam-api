@@ -6,9 +6,8 @@ namespace App\Http\Controller;
 
 use App\Domain\Service\VkAccount\VkAccountService;
 use App\Http\Request\VkAccount\CreateVkAccountInput;
+use App\Http\Response\Success\SimpleSuccessResponse;
 use App\Http\Response\VkAccount\CreationLinkResponse;
-use App\Http\Response\VkAccount\VkAccountCreatedResponse;
-use App\Http\Response\VkAccount\VkAccountDeletedResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,7 +36,7 @@ class VkAccountController extends AbstractController
 
         $this->vkAccountService->create($user, $vkId, $accessToken);
 
-        return $this->json(new VkAccountCreatedResponse());
+        return $this->json(new SimpleSuccessResponse());
     }
 
     #[Route('/v1/vk-accounts/{id<\d+>}', methods: 'DELETE', name: 'api.v1.vkAccounts.delete')]
@@ -47,6 +46,6 @@ class VkAccountController extends AbstractController
 
         $this->vkAccountService->delete($user, $id);
 
-        return $this->json(new VkAccountDeletedResponse());
+        return $this->json(new SimpleSuccessResponse());
     }
 }

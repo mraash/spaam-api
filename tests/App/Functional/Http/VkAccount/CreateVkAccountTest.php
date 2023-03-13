@@ -20,12 +20,12 @@ class CreateVkAccountTest extends AbstractVkAccountTest
             'user_id' => '123'
         ]);
 
-        $this->getClient()->getResponse();
-
-        $vkAccount = $this->getRepository()->findOneBy(['vkAccessToken' => 'abc']);
+        $response = $this->getClient()->getResponse();
+        $dbVkAccount = $this->getRepository()->findOneBy(['vkAccessToken' => 'abc']);
 
         $this->assertResponseIsSuccessful();
-        $this->assertInstanceOf(VkAccount::class, $vkAccount);
+        $this->assertJsonResponse($response);
+        $this->assertInstanceOf(VkAccount::class, $dbVkAccount);
     }
 
     public function test_unauthorized(): void

@@ -11,8 +11,8 @@ use SymfonyExtension\Domain\Repository\AbstractRepository;
  *
  * @method User|null findOneById(int $id)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findListBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method User[] findAll()
+ * @method User[] findListBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
  */
 class UserRepository extends AbstractRepository
 {

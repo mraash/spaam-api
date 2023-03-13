@@ -15,8 +15,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  *
  * @phpstan-method TEntity|null findOneById(int $id)
  * @phpstan-method TEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @phpstan-method TEntity[]    findAll()
- * @phpstan-method TEntity[]    findListBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @phpstan-method TEntity[] findAll()
+ * @phpstan-method TEntity[] findListBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
  */
 abstract class AbstractRepository extends ServiceEntityRepository
 {

@@ -40,7 +40,7 @@ class VkAccountService
 
     public function create(User $owner, int $vkId, string $vkAccessToken): VkAccount
     {
-        if ($this->repository->findByVkId($owner, $vkId) !== null) {
+        if ($this->repository->findOneByVkIdWithOwner($owner, $vkId) !== null) {
             throw new VkAccountAlreadyAddedException();
         }
 
@@ -71,5 +71,16 @@ class VkAccountService
 
         $this->repository->remove($vkAccount);
         $this->repository->flush();
+    }
+
+    public function findOneById(user $owner, int $id): VkAccount
+    {
+        $vkAccount = $this->repository->findOneByIdWithOwner($owner, $id);
+
+        if ($vkAccount === null) {
+            throw new VkAccountNotFoundException();
+        }
+
+        return $vkAccount;
     }
 }

@@ -32,7 +32,7 @@ class AuthController extends AbstractController
         return $response;
     }
 
-    #[Route('/v1/auth/login', methods: 'GET', name: 'api.v1.auth.login')]
+    #[Route('/v1/auth/login', methods: 'POST', name: 'api.v1.auth.login')]
     public function login(): never
     {
         // Route is activated in config/packages/security.yaml

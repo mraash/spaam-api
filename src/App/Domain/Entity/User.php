@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id; /** @phpstan-ignore-line */
+    private int $id;
 
     #[ORM\Column(length: 180, unique: true)]
     private string $email;

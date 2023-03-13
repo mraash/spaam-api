@@ -12,7 +12,7 @@ class VkAccount
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id; /** @phpstan-ignore-line */
+    private int $id;
 
     #[ORM\ManyToOne(inversedBy: 'vkAccounts')]
     #[ORM\JoinColumn(nullable: false)]
