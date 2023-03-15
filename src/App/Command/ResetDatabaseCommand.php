@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Command;
+
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+
+#[AsCommand('app:database:reset')]
+class ResetDatabaseCommand extends Command
+{
+    public function __construct(
+        private KernelInterface $kernel
+    ) {
+        parent::__construct();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        // Some poopy code in command class...
+
+        // database.drop
+        $dropInput =new ArrayInput([
+            '-f' => true,
+        ]);
+
+        $dropOutput = new BufferedOutput();
+
+        $dropCode = $this->getApplication()->find('doctrine:database:drop')->run($dropInput, $dropOutput);
+
+        if ($dropCode !== Command::SUCCESS) {
+            $output->write('<error>' . $dropOutput->fetch() . '</error>');
+            return $dropCode;
+        }
+
+        // database.create
+        $createOutput = new BufferedOutput();
+
+        $createCode = $this->getApplication()->find('doctrine:database:create')->run(new ArrayInput([]), $createOutput);
+
+        if ($createCode !== Command::SUCCESS) {
+            $output->write('<error>' . $createOutput->fetch() . '</error>');
+            return $createCode;
+        }
+
+        // migrations.migrate
+        $migrationsOutput = new BufferedOutput();
+
+        $migrationsInput = new ArrayInput([]);
+        $migrationsInput->setInteractive(false);
+
+        $mCode = $this->getApplication()->find('doctrine:migrations:migrate')->run($migrationsInput, $migrationsOutput);
+
+        if ($mCode !== Command::SUCCESS) {
+            $output->write('<error>' . $migrationsOutput->fetch() . '</error>');
+            return $mCode;
+        }
+
+        $output->writeln('<info>ok...</>');
+        return Command::SUCCESS;
+    }
+}
