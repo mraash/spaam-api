@@ -8,20 +8,18 @@ use App\Domain\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Helmich\JsonAssert\JsonAssertions;
-use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use UnexpectedValueException;
 
 abstract class AbstractWebTestCase extends WebTestCase
 {
     use JsonAssertions;
 
-    private KernelBrowser $client;
-    private EntityManager $em;
+    protected KernelBrowser $client;
+    protected EntityManager $em;
     /** @var EntityRepository<object> */
-    private ?EntityRepository $repository;
+    protected EntityRepository $repository;
 
     protected function setUp(): void
     {
@@ -36,10 +34,7 @@ abstract class AbstractWebTestCase extends WebTestCase
 
         $this->client = $client;
         $this->em = $em;
-
-        if (is_string($entityClass)) {
-            $this->repository = $em->getRepository($entityClass);
-        }
+        $this->repository = $em->getRepository($entityClass);
     }
 
     protected function tearDown(): void
@@ -54,38 +49,11 @@ abstract class AbstractWebTestCase extends WebTestCase
     }
 
     /**
-     * @return EntityRepository<object>
-     */
-    protected function getRepository(): EntityRepository
-    {
-        if ($this->repository === null) {
-            throw new LogicException('Before using repository, add getEntityClass method.');
-        }
-
-        return $this->repository;
-    }
-
-    protected function getClient(): KernelBrowser
-    {
-        return $this->client;
-    }
-
-    protected function getEntityManager(): EntityManager
-    {
-        return $this->em;
-    }
-
-    /**
      * Required for the repository.
-     *
-     * If returns null, the $this->getRepository() method will not be available.
      *
      * @phpstan-return class-string|null
      */
-    protected function getEntityClass(): ?string
-    {
-        return null;
-    }
+    abstract protected function getEntityClass(): string;
 
     protected function createUser(string $email = null): User
     {

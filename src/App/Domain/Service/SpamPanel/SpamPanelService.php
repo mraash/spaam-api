@@ -6,7 +6,6 @@ namespace App\Domain\Service\SpamPanel;
 
 use App\Domain\Entity\SpamPanel;
 use App\Domain\Entity\User;
-use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\SpamPanelRepository;
 use App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException;
 use App\Domain\Service\VkAccount\VkAccountService;

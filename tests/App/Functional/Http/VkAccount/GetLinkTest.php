@@ -6,15 +6,22 @@ namespace Tests\App\Functional\Http\VkAccount;
 
 class GetLinkTest extends AbstractVkAccountTest
 {
-    private const METHOD = 'GET';
-    private const URI = '/v1/vk-accounts/link';
+    private static function getMethod(): string
+    {
+        return 'GET';
+    }
+
+    private static function getUri(): string
+    {
+        return '/v1/vk-accounts/link';
+    }
 
     public function test_successful(): void
     {
         $this->createAndLoginUser();
-        $this->getClient()->request(self::METHOD, self::URI);
+        $this->client->request(self::getMethod(), self::getUri());
 
-        $response = $this->getClient()->getResponse();
+        $response = $this->client->getResponse();
         $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseIsSuccessful();
@@ -30,6 +37,6 @@ class GetLinkTest extends AbstractVkAccountTest
 
     public function test_unauthorized(): void
     {
-        $this->makeBasicAccessDeniedTest(self::METHOD, self::URI);
+        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri());
     }
 }

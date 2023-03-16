@@ -8,20 +8,27 @@ use App\Domain\Entity\VkAccount;
 
 class CreateVkAccountTest extends AbstractVkAccountTest
 {
-    private const URI = '/v1/vk-accounts/create';
-    private const METHOD = 'GET';
+    private static function getMethod(): string
+    {
+        return 'GET';
+    }
+
+    private static function getUri(): string
+    {
+        return '/v1/vk-accounts/create';
+    }
 
     public function test_successful(): void
     {
         $this->createAndLoginUser();
 
-        $this->getClient()->request(self::METHOD, self::URI, parameters: [
+        $this->client->request(self::getMethod(), self::getUri(), parameters: [
             'access_token' => 'abc',
             'user_id' => '123'
         ]);
 
-        $response = $this->getClient()->getResponse();
-        $dbVkAccount = $this->getRepository()->findOneBy(['vkAccessToken' => 'abc']);
+        $response = $this->client->getResponse();
+        $dbVkAccount = $this->repository->findOneBy(['vkAccessToken' => 'abc']);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
@@ -30,6 +37,6 @@ class CreateVkAccountTest extends AbstractVkAccountTest
 
     public function test_unauthorized(): void
     {
-        $this->makeBasicAccessDeniedTest(self::METHOD, self::URI);
+        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri());
     }
 }

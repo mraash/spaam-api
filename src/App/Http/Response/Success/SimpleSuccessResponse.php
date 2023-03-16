@@ -6,10 +6,10 @@ namespace App\Http\Response\Success;
 
 class SimpleSuccessResponse
 {
-    public readonly bool $sucess;
+    public readonly bool $success;
 
     public function __construct()
     {
-        $this->sucess = true;
+        $this->success = true;
     }
 }

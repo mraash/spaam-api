@@ -6,16 +6,26 @@ namespace Tests\App\Functional\Http\VkAccount;
 
 class DeleteVkAccountTest extends AbstractVkAccountTest
 {
+    private static function getMethod(): string
+    {
+        return 'DELETE';
+    }
+
+    private static function getUri(int $id): string
+    {
+        return "/v1/vk-accounts/$id";
+    }
+
     public function test_successful(): void
     {
         $user = $this->createAndLoginUser();
         $vkAccount = $this->createVkAccount($user);
         $id = $vkAccount->getId();
 
-        $this->getClient()->request('DELETE', "/v1/vk-accounts/$id");
+        $this->client->request(self::getMethod(), self::getUri($id));
 
-        $response = $this->getClient()->getResponse();
-        $dbVkAccount = $this->getRepository()->find($id);
+        $response = $this->client->getResponse();
+        $dbVkAccount = $this->repository->find($id);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
@@ -24,16 +34,16 @@ class DeleteVkAccountTest extends AbstractVkAccountTest
 
     public function test_unauthorized(): void
     {
-        $this->makeBasicAccessDeniedTest('DELETE', '/v1/vk-accounts/1');
+        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri(1));
     }
 
     public function test_not_found(): void
     {
         $this->createAndLoginUser();
 
-        $this->getClient()->request('DELETE', '/v1/vk-accounts/666');
+        $this->client->request(self::getMethod(), self::getUri(666));
 
-        $response = $this->getClient()->getResponse();
+        $response = $this->client->getResponse();
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
@@ -47,9 +57,9 @@ class DeleteVkAccountTest extends AbstractVkAccountTest
 
         $this->createAndLoginUser('admin@test.com');
 
-        $this->getClient()->request('DELETE', "/v1/vk-accounts/$id");
+        $this->client->request(self::getMethod(), self::getUri($id));
 
-        $response = $this->getClient()->getResponse();
+        $response = $this->client->getResponse();
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
