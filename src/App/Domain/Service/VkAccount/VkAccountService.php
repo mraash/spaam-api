@@ -73,7 +73,15 @@ class VkAccountService
         $this->repository->flush();
     }
 
-    public function findOneById(user $owner, int $id): VkAccount
+    /**
+     * @return VkAccount[]
+     */
+    public function findAll(User $owner): array
+    {
+        return $this->repository->findAllWithOwner($owner);
+    }
+
+    public function findOneById(User $owner, int $id): VkAccount
     {
         $vkAccount = $this->repository->findOneByIdWithOwner($owner, $id);
 

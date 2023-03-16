@@ -8,7 +8,7 @@ use App\Domain\Entity\SpamPanel;
 
 class SpamPanelIndexResponse
 {
-    /** @var SpamPanelResource */
+    /** @var SpamPanelResource[] */
     public array $spamPanels;
 
     /**

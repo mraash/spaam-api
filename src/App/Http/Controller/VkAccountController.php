@@ -8,6 +8,8 @@ use App\Domain\Service\VkAccount\VkAccountService;
 use App\Http\Request\VkAccount\CreateVkAccountInput;
 use App\Http\Response\Success\SimpleSuccessResponse;
 use App\Http\Response\VkAccount\CreationLinkResponse;
+use App\Http\Response\VkAccount\VkAccountIndexResponse;
+use App\Http\Response\VkAccount\VkAccountResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,6 +18,26 @@ class VkAccountController extends AbstractController
     public function __construct(
         private VkAccountService $vkAccountService,
     ) {
+    }
+
+    #[Route('/v1/vk-accounts', methods: 'GET', name: 'api.v1.vkAccounts.index')]
+    public function index(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        $vkAccountList = $this->vkAccountService->findAll($user);
+
+        return $this->json(new VkAccountIndexResponse($vkAccountList));
+    }
+
+    #[Route('/v1/vk-accounts/{id<\d+>}', methods: 'GET', name: 'api.v1.vkAccounts.single')]
+    public function single(int $id): JsonResponse
+    {
+        $user = $this->getUser();
+
+        $vkAccount = $this->vkAccountService->findOneById($user, $id);
+
+        return $this->json(new VkAccountResource($vkAccount));
     }
 
     #[Route('/v1/vk-accounts/link', methods: 'GET', name: 'api.v1.vkAccounts.link')]

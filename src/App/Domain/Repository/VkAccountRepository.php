@@ -32,6 +32,16 @@ class VkAccountRepository extends AbstractRepository
         $this->getEntityManager()->remove($vkAccount);
     }
 
+    /**
+     * @return VkAccount[]
+     */
+    public function findAllWithOwner(User $owner): array
+    {
+        return $this->findListBy([
+            'owner' => $owner,
+        ]);
+    }
+
     public function findOneByIdWithOwner(User $owner, int $id): ?VkAccount
     {
         return $this->findOneBy([
