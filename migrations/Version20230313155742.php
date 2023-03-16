@@ -7,19 +7,15 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20230313155742 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Create SpamPanel.';
     }
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE spam_panel_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE spam_panel (id INT NOT NULL, owner_id INT NOT NULL, sender_id INT NOT NULL, recipient VARCHAR(255) NOT NULL, texts JSON NOT NULL, timers JSON NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_612086087E3C61F9 ON spam_panel (owner_id)');
@@ -30,7 +26,6 @@ final class Version20230313155742 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP SEQUENCE spam_panel_id_seq CASCADE');
         $this->addSql('ALTER TABLE spam_panel DROP CONSTRAINT FK_612086087E3C61F9');

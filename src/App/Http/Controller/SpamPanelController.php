@@ -6,6 +6,7 @@ namespace App\Http\Controller;
 
 use App\Domain\Service\SpamPanel\SpamPanelService;
 use App\Http\Request\SpamPanel\CreateSpamPanelInput;
+use App\Http\Request\SpamPanel\UpdateSpamPanelInput;
 use App\Http\Response\SpamPanel\SpamPanelIndexResponse;
 use App\Http\Response\SpamPanel\SpamPanelResource;
 use App\Http\Response\Success\SimpleSuccessResponse;
@@ -55,11 +56,19 @@ class SpamPanelController extends AbstractController
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.update')]
-    public function update(): JsonResponse
+    public function update(UpdateSpamPanelInput $input, int $id): JsonResponse
     {
-        $user = $this->getUser();
+        $senderId = $input->getSenderId();
+        $recipient = $input->getRecipient();
+        $texts = $input->getTexts();
+        $timers = $input->getTimers();
 
-        return $this->json(null);
+        $user = $this->getUser();
+        $panel = $this->spamPanelService->findOneById($user, $id);
+
+        $this->spamPanelService->updateWhole($panel, $senderId, $recipient, $texts, $timers);
+
+        return $this->json(new SimpleSuccessResponse());
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'DELETE', name: 'api.v1.spamPanels.delete')]

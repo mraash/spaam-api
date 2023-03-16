@@ -7,6 +7,6 @@ namespace App\Http\Request\SpamPanel;
 use SymfonyExtension\Http\Attribute\Input\AsJsonBodyInput;
 
 #[AsJsonBodyInput]
-class CreateSpamPanelInput extends AbstractCreationInput
+class UpdateSpamPanelInput extends AbstractCreationInput
 {
 }

@@ -17,11 +17,11 @@
 /.idea
 /.vscode
 
-### squizlabs/php_codesniffer
-/.phpcs-cache
-
 ### lexik/jwt-authentication-bundle
 /config/jwt/*.pem
+
+### squizlabs/php_codesniffer
+/.phpcs-cache
 
 ### phpunit/phpunit
 .phpunit.result.cache

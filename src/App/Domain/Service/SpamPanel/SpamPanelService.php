@@ -29,18 +29,32 @@ class SpamPanelService
 
         $panel = new SpamPanel();
 
-        $panel
-            ->setOwner($owner)
-            ->setSender($sender)
-            ->setRecipient($recipient)
-            ->setTexts($texts)
-            ->setTimers($timers)
-        ;
+        $panel->setOwner($owner);
+        $panel->setSender($sender);
+        $panel->setRecipient($recipient);
+        $panel->setTexts($texts);
+        $panel->setTimers($timers);
 
         $this->repository->save($panel);
         $this->repository->flush();
 
         return $panel;
+    }
+
+    public function updateWhole(SpamPanel $panel, int $senderId, string $recipient, array $texts, array $timers): void
+    {
+        $panel->setRecipient($recipient);
+        $panel->setTexts($texts);
+        $panel->setTimers($timers);
+
+        if ($senderId !== $panel->getSender()->getId()) {
+            $sender = $this->vkAccountService->findOneById($panel->getOwner(), $senderId);
+
+            $panel->setSender($sender);
+        }
+
+        $this->repository->save($panel);
+        $this->repository->flush();
     }
 
     public function delete(User $owner, int $id): void
