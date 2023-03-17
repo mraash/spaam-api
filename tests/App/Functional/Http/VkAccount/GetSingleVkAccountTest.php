@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Http\VkAccount;
 
-class DeleteVkAccountTest extends VkAccountTestCase
+class GetSingleVkAccountTest extends VkAccountTestCase
 {
     private static function getMethod(): string
     {
-        return 'DELETE';
+        return 'GET';
     }
 
     private static function getUri(int $id): string
@@ -16,20 +16,33 @@ class DeleteVkAccountTest extends VkAccountTestCase
         return "/v1/vk-accounts/$id";
     }
 
+    /**
+     * @return mixed[]
+     */
+    private static function getResponseSchema(): array
+    {
+        return [
+            'type' => 'object',
+            'required' => ['id', 'vkId'],
+            'properties' => [
+                'id' => ['type' => 'integer'],
+                'vkId' => ['type' => 'integer'],
+            ],
+        ];
+    }
+
     public function test_successful(): void
     {
         $user = $this->createAndLoginUser();
         $vkAccount = $this->createVkAccount($user);
-        $id = $vkAccount->getId();
 
-        $this->client->request(self::getMethod(), self::getUri($id));
-
+        $this->client->request(self::getMethod(), self::getUri($vkAccount->getId()));
         $response = $this->client->getResponse();
-        $dbVkAccount = $this->repository->find($id);
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertNull($dbVkAccount);
+        $this->assertJsonDocumentMatchesSchema($responseData, self::getResponseSchema());
     }
 
     public function test_unauthorized(): void
@@ -42,23 +55,20 @@ class DeleteVkAccountTest extends VkAccountTestCase
         $this->createAndLoginUser();
 
         $this->client->request(self::getMethod(), self::getUri(666));
-
         $response = $this->client->getResponse();
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
     }
 
-    public function test_wrong_owner(): void
+    public function test_another_owner(): void
     {
-        $realOwner = $this->createUser('tester@test.com');
+        $realOwner = $this->createUser('real-owner@test.com');
         $vkAccount = $this->createVkAccount($realOwner);
-        $id = $vkAccount->getId();
 
-        $this->createAndLoginUser('admin@test.com');
+        $this->createAndLoginUser('test@test.com');
 
-        $this->client->request(self::getMethod(), self::getUri($id));
-
+        $this->client->request(self::getMethod(), self::getUri($vkAccount->getId()));
         $response = $this->client->getResponse();
 
         $this->assertResponseStatusCodeSame(404);

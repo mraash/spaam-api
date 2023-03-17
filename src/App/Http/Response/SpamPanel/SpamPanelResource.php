@@ -9,18 +9,18 @@ use App\Domain\Entity\VkAccount;
 
 class SpamPanelResource
 {
-    public int $id;
+    public readonly int $id;
 
     /** @var mixed[] */
-    public array $sender;
+    public readonly array $sender;
 
-    public string $recipient;
-
-    /** @var mixed[] */
-    public array $texts;
+    public readonly string $recipient;
 
     /** @var mixed[] */
-    public array $timers;
+    public readonly array $texts;
+
+    /** @var mixed[] */
+    public readonly array $timers;
 
     public function __construct(SpamPanel $spamPanel)
     {

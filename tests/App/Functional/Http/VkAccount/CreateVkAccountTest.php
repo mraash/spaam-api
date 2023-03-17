@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Http\VkAccount;
 
 use App\Domain\Entity\VkAccount;
 
-class CreateVkAccountTest extends AbstractVkAccountTest
+class CreateVkAccountTest extends VkAccountTestCase
 {
     private static function getMethod(): string
     {

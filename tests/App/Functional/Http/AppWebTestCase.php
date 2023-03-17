@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractWebTestCase extends WebTestCase
+abstract class AppWebTestCase extends WebTestCase
 {
     use JsonAssertions;
 

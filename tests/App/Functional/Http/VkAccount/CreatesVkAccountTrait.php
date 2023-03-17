@@ -7,7 +7,7 @@ namespace Tests\App\Functional\Http\VkAccount;
 use App\Domain\Entity\User;
 use App\Domain\Entity\VkAccount;
 
-trait CreatesVkAccount
+trait CreatesVkAccountTrait
 {
     protected function createVkAccount(User $owner, string $vkAccessToken = null, int $vkId = null): VkAccount
     {

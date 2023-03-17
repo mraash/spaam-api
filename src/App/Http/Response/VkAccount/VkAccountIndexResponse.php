@@ -9,7 +9,7 @@ use App\Domain\Entity\VkAccount;
 class VkAccountIndexResponse
 {
     /** @var VkAccountResource[] */
-    public readonly array $vkAccounts;
+    public readonly array $items;
 
     /**
      * @param VkAccount[] $vkAccountList
@@ -22,6 +22,6 @@ class VkAccountIndexResponse
             array_push($recourceList, new VkAccountResource($vkAccount));
         }
 
-        $this->vkAccounts = $recourceList;
+        $this->items = $recourceList;
     }
 }

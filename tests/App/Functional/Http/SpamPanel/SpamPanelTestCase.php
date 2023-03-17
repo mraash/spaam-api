@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Http\SpamPanel;
 
 use App\Domain\Entity\SpamPanel;
-use Tests\App\Functional\Http\AbstractWebTestCase;
-use Tests\App\Functional\Http\VkAccount\CreatesVkAccount;
+use Tests\App\Functional\Http\AppWebTestCase;
+use Tests\App\Functional\Http\VkAccount\CreatesVkAccountTrait;
 
-abstract class AbstractSpamPanelTest extends AbstractWebTestCase
+abstract class SpamPanelTestCase extends AppWebTestCase
 {
-    use CreatesVkAccount;
+    use CreatesVkAccountTrait;
 
     protected function getEntityClass(): string
     {

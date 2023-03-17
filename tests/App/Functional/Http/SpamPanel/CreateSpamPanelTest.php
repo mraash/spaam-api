@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Http\SpamPanel;
 
 use App\Domain\Entity\SpamPanel;
 
-class CreateSpamPanelTest extends AbstractSpamPanelTest
+class CreateSpamPanelTest extends SpamPanelTestCase
 {
     private static function getMethod(): string
     {

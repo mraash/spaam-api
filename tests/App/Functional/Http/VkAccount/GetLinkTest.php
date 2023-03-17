@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Http\VkAccount;
 
-class GetLinkTest extends AbstractVkAccountTest
+class GetLinkTest extends VkAccountTestCase
 {
     private static function getMethod(): string
     {

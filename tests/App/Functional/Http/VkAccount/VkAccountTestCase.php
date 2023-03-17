@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Http\VkAccount;
 
 use App\Domain\Entity\VkAccount;
-use Tests\App\Functional\Http\AbstractWebTestCase;
+use Tests\App\Functional\Http\AppWebTestCase;
 
-abstract class AbstractVkAccountTest extends AbstractWebTestCase
+abstract class VkAccountTestCase extends AppWebTestCase
 {
-    use CreatesVkAccount;
+    use CreatesVkAccountTrait;
 
     protected function getEntityClass(): string
     {
