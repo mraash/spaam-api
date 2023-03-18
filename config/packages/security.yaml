@@ -3,7 +3,7 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     providers:
         users:
-            id: App\Security\ApiUserProvider
+            id: App\Http\Security\ApiUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

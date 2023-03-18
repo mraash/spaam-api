@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security;
+namespace App\Http\Security;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepository;
