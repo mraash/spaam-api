@@ -9,7 +9,7 @@ parameters:
         Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
 
         # App exceptions
-        SymfonyExtension\Http\ArgumentResolver\Input\Exception\RequestBodyConvertException: { httpCode: 400, visible: true },
+        SymfonyExtension\Http\Input\Builder\Exception\JsonBodyDecodeException: { httpCode: 400, visible: true },
         App\Domain\Service\User\Exceptions\UserAlreadyExistsException: { httpCode: 400, visible: true },
         App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException: { httpCode: 400, visible: true },
         App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException: { httpCode: 404, visible: true },

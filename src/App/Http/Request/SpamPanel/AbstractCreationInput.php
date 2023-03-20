@@ -7,58 +7,57 @@ namespace App\Http\Request\SpamPanel;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
+use SymfonyExtension\Http\Input\Input\AbstractJsonBodyInput;
 
-abstract class AbstractCreationInput
+abstract class AbstractCreationInput extends AbstractJsonBodyInput
 {
-    #[NotBlank]
-    #[Type('integer')]
-    public mixed $senderId;
-
-    #[NotBlank]
-    #[Type('string')]
-    public mixed $recipient;
-
-    #[NotBlank]
-    #[Type('array')]
-    #[All([
-        new Type('string'),
-    ])]
-    public mixed $texts;
-
-    /** @var mixed|array */
-    #[NotBlank]
-    #[Type('array')]
-    #[All(new Collection([
-        'seconds' => [
-            new NotBlank(),
-            new Type('integer'),
-        ],
-        'repeat' => [
-            new NotBlank(),
-            new Type('integer'),
-        ],
-    ]))]
-    public mixed $timers;
-
-    public function __construct(mixed $senderId, mixed $recipient, mixed $texts, mixed $timers)
+    protected static function fields(): array
     {
-        $this->senderId = $senderId;
-        $this->recipient = $recipient;
-        $this->texts = $texts;
-        $this->timers = $timers;
+        return [
+            'senderId' => new Required([
+                new NotBlank(),
+                new Type('integer'),
+            ]),
+            'recipient' => new Required([
+                new NotBlank(),
+                new Type('string'),
+            ]),
+            'texts' => new Required([
+                new NotBlank(),
+                new Type('array'),
+                new All([
+                    new Type('string'),
+                ]),
+            ]),
+            'timers' => new Required([
+                new NotBlank(),
+                new Type('array'),
+                new All(new Collection([
+                    'seconds' => [
+                        new NotBlank(),
+                        new Type('integer'),
+                    ],
+                    'repeat' => [
+                        new NotBlank(),
+                        new Type('integer'),
+                    ],
+                ])),
+            ]),
+        ];
     }
 
     public function getSenderId(): int
     {
         /** @var int */
-        return $this->senderId;
+        return $this->getParam('senderId');
     }
 
     public function getRecipient(): string
     {
         /** @var string */
-        return $this->recipient;
+        return $this->getParam('recipient');
     }
 
     /**
@@ -67,15 +66,14 @@ abstract class AbstractCreationInput
     public function getTexts(): array
     {
         /** @var string[] */
-        return $this->texts;
+        return $this->getParam('texts');
     }
 
     /**
-     * @return Timer[]
+     * @return array<array<string,int>>
      */
     public function getTimers(): array
     {
-        /** @var Timer[] */
-        return $this->timers;
+        return $this->getParam('timers');
     }
 }

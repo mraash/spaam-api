@@ -48,7 +48,7 @@ class VkAccountController extends AbstractController
         return $this->json(new CreationLinkResponse($link));
     }
 
-    #[Route('/v1/vk-accounts/create', methods: 'GET', name: 'api.v1.vkAccounts.create')]
+    #[Route('/v1/vk-accounts/create', methods: ['GET', 'POST'], name: 'api.v1.vkAccounts.create')]
     public function create(CreateVkAccountInput $input): JsonResponse
     {
         $vkId = $input->getUserId();

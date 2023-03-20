@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\ExceptionHandler\Validation;
 
-use SymfonyExtension\Http\ArgumentResolver\Input\Exception\ValidationException;
 use App\Http\Response\Error\ErrorResponse;
 use Stringable;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +13,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use SymfonyExtension\Http\Input\Builder\Exception\ValidationException;
 
 class ValidationExceptionListener
 {

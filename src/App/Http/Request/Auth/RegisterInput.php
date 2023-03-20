@@ -8,42 +8,53 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
-use SymfonyExtension\Http\Attribute\Input\AsJsonBodyInput;
+use SymfonyExtension\Http\Input\Input\AbstractJsonBodyInput;
 
-#[AsJsonBodyInput]
-class RegisterInput
+class RegisterInput extends AbstractJsonBodyInput
 {
-    #[NotBlank]
-    #[Type('string')]
-    #[Email]
-    #[Length(max: 180)]
-    public mixed $email;
-
-    #[NotBlank]
-    #[Type('string')]
-    public mixed $password;
-
-    #[NotBlank]
-    #[Type('string')]
-    #[EqualTo(propertyPath: 'password', message: 'This value should be equal to password.')]
-    public mixed $passwordRepeat;
+    protected static function fields(): array
+    {
+        return [
+            'email' => new Required([
+                new NotBlank(),
+                new Type('string'),
+                new Email(),
+                new Length(
+                    max: 180
+                ),
+            ]),
+            'password' => new Required([
+                new NotBlank(),
+                new Type('string'),
+            ]),
+            'passwordRepeat' => new Required([
+                new NotBlank(),
+                new Type('string'),
+                new EqualTo(
+                    propertyPath: 'password',
+                    message: 'This value should be equal to password.'
+                ),
+            ]),
+        ];
+    }
 
     public function getEmail(): string
     {
         /** @var string */
-        return $this->email;
+        return $this->getParam('email');
     }
 
     public function getPssword(): string
     {
         /** @var string */
-        return $this->password;
+        return $this->getParam('password');
     }
 
     public function getPasswordRepeat(): string
     {
         /** @var string */
-        return $this->passwordRepeat;
+        return $this->getParam('passwordRepeat');
     }
 }
