@@ -23,7 +23,7 @@ class ResetDatabaseCommand extends Command
         $app = $this->getApplication() ?? throw new RuntimeException('Application is null.');
 
         // database.drop
-        $dropInput =new ArrayInput([
+        $dropInput = new ArrayInput([
             '-f' => true,
         ]);
 

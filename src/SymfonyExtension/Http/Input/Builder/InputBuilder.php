@@ -70,7 +70,7 @@ class InputBuilder
             return new $inputClass($params);
         }
 
-        return new $inputClass;
+        return new $inputClass();
     }
 
     /**

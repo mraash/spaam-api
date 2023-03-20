@@ -27,13 +27,13 @@ abstract class AbstractInput
     /**
      * @return int[] Array of self::REQUEST_TYPE constants.
      */
-    abstract static public function allowedRequestTypes(): array;
+    abstract public static function allowedRequestTypes(): array;
 
     /**
      * Note: All Collection::fields constraints should be wrapped in Existence
      *   (Required, Optional, etc.) constraint.
      */
-    abstract static public function rules(): Collection;
+    abstract public static function rules(): Collection;
 
     /**
      * @return array<string,mixed>
