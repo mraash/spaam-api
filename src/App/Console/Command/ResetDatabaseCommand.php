@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Command;
 
+use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -15,15 +16,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 #[AsCommand('app:database:reset')]
 class ResetDatabaseCommand extends Command
 {
-    public function __construct(
-        private KernelInterface $kernel
-    ) {
-        parent::__construct();
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Some poopy code in command class...
+
+        $app = $this->getApplication() ?? throw new RuntimeException('Application is null.');
 
         // database.drop
         $dropInput =new ArrayInput([
@@ -32,7 +29,7 @@ class ResetDatabaseCommand extends Command
 
         $dropOutput = new BufferedOutput();
 
-        $dropCode = $this->getApplication()->find('doctrine:database:drop')->run($dropInput, $dropOutput);
+        $dropCode = $app->find('doctrine:database:drop')->run($dropInput, $dropOutput);
 
         if ($dropCode !== Command::SUCCESS) {
             $output->write('<error>' . $dropOutput->fetch() . '</error>');
@@ -42,7 +39,7 @@ class ResetDatabaseCommand extends Command
         // database.create
         $createOutput = new BufferedOutput();
 
-        $createCode = $this->getApplication()->find('doctrine:database:create')->run(new ArrayInput([]), $createOutput);
+        $createCode = $app->find('doctrine:database:create')->run(new ArrayInput([]), $createOutput);
 
         if ($createCode !== Command::SUCCESS) {
             $output->write('<error>' . $createOutput->fetch() . '</error>');
@@ -55,7 +52,7 @@ class ResetDatabaseCommand extends Command
         $migrationsInput = new ArrayInput([]);
         $migrationsInput->setInteractive(false);
 
-        $mCode = $this->getApplication()->find('doctrine:migrations:migrate')->run($migrationsInput, $migrationsOutput);
+        $mCode = $app->find('doctrine:migrations:migrate')->run($migrationsInput, $migrationsOutput);
 
         if ($mCode !== Command::SUCCESS) {
             $output->write('<error>' . $migrationsOutput->fetch() . '</error>');

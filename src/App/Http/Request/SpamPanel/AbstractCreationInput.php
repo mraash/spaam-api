@@ -74,6 +74,7 @@ abstract class AbstractCreationInput extends AbstractJsonBodyInput
      */
     public function getTimers(): array
     {
+        /** @var array<array<string,int>> */
         return $this->getParam('timers');
     }
 }

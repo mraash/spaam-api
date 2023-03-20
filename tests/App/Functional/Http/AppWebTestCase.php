@@ -51,7 +51,7 @@ abstract class AppWebTestCase extends WebTestCase
     /**
      * Required for the repository.
      *
-     * @phpstan-return class-string|null
+     * @phpstan-return class-string
      */
     abstract protected function getEntityClass(): string;
 
@@ -113,5 +113,14 @@ abstract class AppWebTestCase extends WebTestCase
         }
 
         return $data;
+    }
+
+    /**
+     * @param mixed[] $data
+     */
+    protected function toJson(array $data): string
+    {
+        /** @var string */
+        return json_encode($data);
     }
 }

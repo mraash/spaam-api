@@ -48,6 +48,10 @@ class TypeConverter
     {
         // TODO: make this more beatiful
 
+        if (!is_string($value)) {
+            return $value;
+        }
+
         if ($type->type === 'integer') {
             if (preg_match('/[0-9]+/', $value)) {
                 return (int) $value;

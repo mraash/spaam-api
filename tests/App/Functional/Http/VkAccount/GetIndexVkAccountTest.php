@@ -56,7 +56,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
     public function test_unauthorized(): void
     {
-        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri(1));
+        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri());
     }
 
     public function test_another_owner(): void

@@ -40,6 +40,10 @@ class SpamPanelService
         return $panel;
     }
 
+    /**
+     * @param string[] $texts
+     * @param array<array<string,int>> $timers
+     */
     public function updateWhole(SpamPanel $panel, int $senderId, string $recipient, array $texts, array $timers): void
     {
         $panel->setRecipient($recipient);

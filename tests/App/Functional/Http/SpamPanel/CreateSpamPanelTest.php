@@ -23,7 +23,7 @@ class CreateSpamPanelTest extends SpamPanelTestCase
         $user = $this->createAndLoginUser();
         $vkAccount = $this->createVkAccount($user);
 
-        $this->client->request(self::getMethod(), self::getUri(), content: json_encode([
+        $this->client->request(self::getMethod(), self::getUri(), content: $this->toJson([
             'senderId' => $vkAccount->getId(),
             'recipient' => 'abc',
             'texts' => [

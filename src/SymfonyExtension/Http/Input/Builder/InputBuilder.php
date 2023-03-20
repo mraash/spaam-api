@@ -73,6 +73,9 @@ class InputBuilder
         return new $inputClass;
     }
 
+    /**
+     * @param mixed[] $params
+     */
     private function validate(array $params, Collection $rules): void
     {
         $violations = $this->validator->validate($params, $rules);
