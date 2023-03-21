@@ -4,11 +4,13 @@ namespace App\Domain\Entity;
 
 use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\SpamPanelRepository;
+use App\Http\Resource\SpamPanelResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use SymfonyExtension\Domain\Entity\ResourceEntityInterface;
 
 #[ORM\Entity(repositoryClass: SpamPanelRepository::class)]
-class SpamPanel
+class SpamPanel implements ResourceEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -104,5 +106,10 @@ class SpamPanel
     {
         $this->timers = $timers;
         return $this;
+    }
+
+    public function toResource(): SpamPanelResource
+    {
+        return new SpamPanelResource($this);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
+use App\Http\Output\ResourceOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,11 +15,6 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        return $this->json([
-            'id' => $user->getId(),
-            'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
-            'roles' => $user->getRoles(),
-        ]);
+        return $this->jsonOutput(new ResourceOutput($user));
     }
 }

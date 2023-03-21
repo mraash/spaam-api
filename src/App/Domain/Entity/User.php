@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use App\Domain\Repository\UserRepository;
+use App\Http\Resource\UserResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use SymfonyExtension\Domain\Entity\ResourceEntityInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, ResourceEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -117,5 +119,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function toResource(): UserResource
+    {
+        return new UserResource($this);
     }
 }

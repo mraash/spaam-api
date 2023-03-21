@@ -4,10 +4,12 @@ namespace App\Domain\Entity;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\VkAccountRepository;
+use App\Http\Resource\VkAccountResource;
 use Doctrine\ORM\Mapping as ORM;
+use SymfonyExtension\Domain\Entity\ResourceEntityInterface;
 
 #[ORM\Entity(repositoryClass: VkAccountRepository::class)]
-class VkAccount
+class VkAccount implements ResourceEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -60,5 +62,10 @@ class VkAccount
     {
         $this->vkAccessToken = $vkAccessToken;
         return $this;
+    }
+
+    public function toResource(): VkAccountResource
+    {
+        return new VkAccountResource($this);
     }
 }

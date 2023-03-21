@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controller;
 
 use App\Domain\Service\SpamPanel\SpamPanelService;
+use App\Http\Output\ResourceListOutput;
+use App\Http\Output\ResourceOutput;
+use App\Http\Output\SuccessOutput;
 use App\Http\Request\SpamPanel\CreateSpamPanelInput;
 use App\Http\Request\SpamPanel\UpdateSpamPanelInput;
-use App\Http\Response\SpamPanel\SpamPanelIndexResponse;
-use App\Http\Response\SpamPanel\SpamPanelResource;
-use App\Http\Response\Success\SimpleSuccessResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,9 +25,9 @@ class SpamPanelController extends AbstractController
     {
         $user = $this->getUser();
 
-        $panels = $this->spamPanelService->findAll($user);
+        $panelList = $this->spamPanelService->findAll($user);
 
-        return $this->json(new SpamPanelIndexResponse($panels));
+        return $this->jsonOutput(new ResourceListOutput($panelList));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'GET', name: 'api.v1.spamPanels.single')]
@@ -37,7 +37,7 @@ class SpamPanelController extends AbstractController
 
         $panel = $this->spamPanelService->findOneById($user, $id);
 
-        return $this->json(new SpamPanelResource($panel));
+        return $this->jsonOutput(new ResourceOutput($panel));
     }
 
     #[Route('/v1/spam-panels', methods: 'POST', name: 'api.v1.spamPanels.create')]
@@ -52,7 +52,7 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->create($user, $senderId, $recipient, $texts, $timers);
 
-        return $this->json(new SimpleSuccessResponse());
+        return $this->jsonOutput(new SuccessOutput());
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.update')]
@@ -68,7 +68,7 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->updateWhole($panel, $senderId, $recipient, $texts, $timers);
 
-        return $this->json(new SimpleSuccessResponse());
+        return $this->jsonOutput(new SuccessOutput());
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'DELETE', name: 'api.v1.spamPanels.delete')]
@@ -78,6 +78,6 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->delete($user, $id);
 
-        return $this->json(new SimpleSuccessResponse());
+        return $this->jsonOutput(new SuccessOutput());
     }
 }

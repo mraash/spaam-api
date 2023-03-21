@@ -3,9 +3,9 @@
 namespace App\Http\Controller;
 
 use App\Domain\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyController;
+use SymfonyExtension\Http\Controller\AbstractController as BaseController;
 
-class AbstractController extends SymfonyController
+class AbstractController extends BaseController
 {
     public function getUser(): User
     {
