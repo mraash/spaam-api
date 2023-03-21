@@ -86,9 +86,11 @@ abstract class AppWebTestCase extends WebTestCase
         $this->client->request($method, $uri);
 
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertJsonResponse($response);
+        $this->assertJsonErrorSchema($responseData);
     }
 
     protected function assertJsonResponse(Response $response): void
@@ -97,6 +99,57 @@ abstract class AppWebTestCase extends WebTestCase
 
         $this->assertEquals('application/json', $response->headers->get('Content-Type'));
         $this->assertJson($content);
+    }
+
+    /**
+     * @param mixed[] $json
+     */
+    protected function assertJsonSuccessSchema(array $json): void
+    {
+        $this->assertJsonDocumentMatchesSchema($json, [
+            'type' => 'object',
+            'required' => ['success'],
+            'properties' => [
+                'success' => ['type' => 'boolean'],
+            ],
+        ]);
+    }
+
+    /**
+     * @param mixed[] $json
+     * @param mixed[] $dataSchema
+     */
+    protected function assertJsonMatchesSuccessSchema(array $json, array $dataSchema): void
+    {
+        $this->assertJsonDocumentMatchesSchema($json, [
+            'type' => 'object',
+            'required' => ['success', 'data'],
+            'properties' => [
+                'success' => ['type' => 'boolean'],
+                'data' => $dataSchema,
+            ],
+        ]);
+    }
+
+    /**
+     * @param mixed[] $json
+     */
+    protected function assertJsonErrorSchema(array $json): void
+    {
+        $this->assertJsonDocumentMatchesSchema($json, [
+            'type' => 'object',
+            'required' => ['success', 'err'],
+            'properties' => [
+                'success' => ['type' => 'boolean'],
+                'err' => [
+                    'type' => 'object',
+                    'required' => ['message'],
+                    'properties' => [
+                        'message' => ['type' => 'string'],
+                    ],
+                ],
+            ],
+        ]);
     }
 
     /**

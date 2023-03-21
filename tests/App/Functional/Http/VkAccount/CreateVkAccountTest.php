@@ -28,10 +28,12 @@ class CreateVkAccountTest extends VkAccountTestCase
         ]);
 
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
         $dbVkAccount = $this->repository->findOneBy(['vkAccessToken' => 'abc']);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
+        $this->assertJsonSuccessSchema($responseData);
         $this->assertInstanceOf(VkAccount::class, $dbVkAccount);
     }
 

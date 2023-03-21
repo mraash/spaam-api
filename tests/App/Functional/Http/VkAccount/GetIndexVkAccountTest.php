@@ -22,21 +22,15 @@ class GetIndexVkAccountTest extends VkAccountTestCase
     private static function getResponseSchema(): array
     {
         return [
-            'type' => 'object',
-            'required' => ['items'],
-            'properties' => [
-                'items' => [
-                    'type' => 'array',
-                    'items' => [
-                        'type' => 'object',
-                        'required' => ['id', 'vkId'],
-                        'properties' => [
-                            'id' => ['type' => 'integer'],
-                            'vkId' => ['type' => 'integer'],
-                        ],
-                    ]
+            'type' => 'array',
+            'items' => [
+                'type' => 'object',
+                'required' => ['id', 'vkId'],
+                'properties' => [
+                    'id' => ['type' => 'integer'],
+                    'vkId' => ['type' => 'integer'],
                 ],
-            ]
+            ],
         ];
     }
 
@@ -51,12 +45,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonDocumentMatchesSchema($responseData, self::getResponseSchema());
-    }
-
-    public function test_unauthorized(): void
-    {
-        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri());
+        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
     }
 
     public function test_another_owner(): void
@@ -72,7 +61,12 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonDocumentMatchesSchema($responseData, self::getResponseSchema());
-        $this->assertCount(0, $responseData['items']);
+        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
+        $this->assertCount(0, $responseData['data']);
+    }
+
+    public function test_unauthorized(): void
+    {
+        $this->makeBasicAccessDeniedTest(self::getMethod(), self::getUri());
     }
 }

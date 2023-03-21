@@ -16,6 +16,20 @@ class GetLinkTest extends VkAccountTestCase
         return '/v1/vk-accounts/link';
     }
 
+    /**
+     * @return mixed[]
+     */
+    private static function getResponseSchema(): array
+    {
+        return [
+            'type' => 'object',
+            'required' => ['link'],
+            'properties' => [
+                'link' => ['type' => 'string'],
+            ]
+        ];
+    }
+
     public function test_successful(): void
     {
         $this->createAndLoginUser();
@@ -26,13 +40,7 @@ class GetLinkTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonDocumentMatchesSchema($responseData, [
-            'type' => 'object',
-            'required' => ['link'],
-            'properties' => [
-                'link' => ['type' => 'string'],
-            ]
-        ]);
+        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
     }
 
     public function test_unauthorized(): void

@@ -25,10 +25,12 @@ class DeleteVkAccountTest extends VkAccountTestCase
         $this->client->request(self::getMethod(), self::getUri($id));
 
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
         $dbVkAccount = $this->repository->find($id);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
+        $this->assertJsonSuccessSchema($responseData);
         $this->assertNull($dbVkAccount);
     }
 
@@ -44,9 +46,11 @@ class DeleteVkAccountTest extends VkAccountTestCase
         $this->client->request(self::getMethod(), self::getUri(666));
 
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
+        $this->assertJsonErrorSchema($responseData);
     }
 
     public function test_wrong_owner(): void
@@ -60,8 +64,10 @@ class DeleteVkAccountTest extends VkAccountTestCase
         $this->client->request(self::getMethod(), self::getUri($id));
 
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
+        $this->assertJsonErrorSchema($responseData);
     }
 }

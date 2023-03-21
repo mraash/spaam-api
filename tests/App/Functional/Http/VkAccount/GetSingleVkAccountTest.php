@@ -42,7 +42,7 @@ class GetSingleVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonDocumentMatchesSchema($responseData, self::getResponseSchema());
+        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
     }
 
     public function test_unauthorized(): void
@@ -56,9 +56,11 @@ class GetSingleVkAccountTest extends VkAccountTestCase
 
         $this->client->request(self::getMethod(), self::getUri(666));
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
+        $this->assertJsonErrorSchema($responseData);
     }
 
     public function test_another_owner(): void
@@ -70,8 +72,10 @@ class GetSingleVkAccountTest extends VkAccountTestCase
 
         $this->client->request(self::getMethod(), self::getUri($vkAccount->getId()));
         $response = $this->client->getResponse();
+        $responseData = $this->jsonResponseToData($response);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertJsonResponse($response);
+        $this->assertJsonErrorSchema($responseData);
     }
 }
