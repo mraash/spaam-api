@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Command;
+namespace App\Console;
 
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
