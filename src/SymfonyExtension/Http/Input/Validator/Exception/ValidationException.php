@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace SymfonyExtension\Http\Input\Builder\Exception;
+namespace SymfonyExtension\Http\Input\Validator\Exception;
 
 use RuntimeException;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use SymfonyExtension\Http\Input\Validator\ViolationList;
 
 class ValidationException extends RuntimeException
 {
     public function __construct(
-        private ConstraintViolationListInterface $violations,
+        private ViolationList $violations,
     ) {
         parent::__construct('Invalid request.');
     }
 
-    public function getViolations(): ConstraintViolationListInterface
+    public function getViolations(): ViolationList
     {
         return $this->violations;
     }

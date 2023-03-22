@@ -26,7 +26,7 @@ class InputArgumentResolver implements ValueResolverInterface
         $argumentType = $argument->getType();
 
         if (is_subclass_of($argumentType, AbstractInput::class)) {
-            $input = $this->inputBuilder->build($request, $argumentType, true);
+            $input = $this->inputBuilder->buildValid($request, $argumentType);
 
             return [$input];
         }

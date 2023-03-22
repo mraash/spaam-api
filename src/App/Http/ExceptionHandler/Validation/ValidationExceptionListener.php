@@ -8,7 +8,7 @@ use App\Http\Output\ValidationErrorOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use SymfonyExtension\Http\Input\Builder\Exception\ValidationException;
+use SymfonyExtension\Http\Input\Validator\Exception\ValidationException;
 
 class ValidationExceptionListener
 {

@@ -4,20 +4,30 @@ declare(strict_types=1);
 
 namespace SymfonyExtension\Http\Input\Builder;
 
+use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use SymfonyExtension\Http\Input\Builder\Exception\JsonBodyDecodeException;
-use SymfonyExtension\Http\Input\Builder\Exception\ValidationException;
+use SymfonyExtension\Http\Input\Validator\Exception\ValidationException;
 use SymfonyExtension\Http\Input\Input\AbstractInput;
 use SymfonyExtension\Http\Input\TypeConverter\TypeConverter;
+use SymfonyExtension\Http\Input\Validator\InputValidator;
 
 class InputBuilder
 {
     public function __construct(
-        private ValidatorInterface $validator,
         private TypeConverter $typeConverter,
+        private InputValidator $inputValidator,
     ) {
+    }
+
+    /**
+     * @phpstan-param class-string<AbstractInput> $inputClass
+     */
+    public function buildValid(Request $request, string $inputClass): AbstractInput
+    {
+        return $this->build($request, $inputClass, true);
     }
 
     /**
@@ -25,7 +35,7 @@ class InputBuilder
      */
     public function build(Request $request, string $inputClass, bool $validate): AbstractInput
     {
-        // TODO: Make this more beautiful
+        // TODO: Add some abstractions here
 
         /** @var Collection */
         $rules = $inputClass::rules();
@@ -39,49 +49,30 @@ class InputBuilder
                 throw new JsonBodyDecodeException();
             }
 
-            if ($validate) {
-                $this->validate($params, $rules);
-            }
+            $input = new $inputClass($params);
+        }
+        elseif (in_array(AbstractInput::REQUEST_TYPE_GET_QUERY, $requestTypes)) {
+            $rawParams = $request->query->all() + $request->files->all();
+            $params = $this->typeConverter->convertTypes($rawParams, $rules);
 
-            return new $inputClass($params);
+            $input = new $inputClass($params);
+        }
+        elseif (in_array(AbstractInput::REQUEST_TYPE_POST_QUERY, $requestTypes)) {
+            $rawParams = $request->request->all() + $request->files->all();
+            $params = $this->typeConverter->convertTypes($rawParams, $rules);
+
+            $input = new $inputClass($params);
+        }
+        else {
+            throw new LogicException(
+                sprintf('Method %s::allowedRequestTypes() shold return at least one request type.', $inputClass)
+            );
         }
 
-        if (in_array(AbstractInput::REQUEST_TYPE_GET_QUERY, $requestTypes)) {
-            $params = $request->query->all() + $request->files->all();
-
-            $params = $this->typeConverter->convertTypes($params, $rules);
-
-            if ($validate) {
-                $this->validate($params, $rules);
-            }
-
-            return new $inputClass($params);
+        if ($validate) {
+            $this->inputValidator->validate($input);
         }
 
-        if (in_array(AbstractInput::REQUEST_TYPE_POST_QUERY, $requestTypes)) {
-            $params = $request->request->all() + $request->files->all();
-
-            $params = $this->typeConverter->convertTypes($params, $rules);
-
-            if ($validate) {
-                $this->validate($params, $rules);
-            }
-
-            return new $inputClass($params);
-        }
-
-        return new $inputClass();
-    }
-
-    /**
-     * @param mixed[] $params
-     */
-    private function validate(array $params, Collection $rules): void
-    {
-        $violations = $this->validator->validate($params, $rules);
-
-        if ($violations->count() > 0) {
-            throw new ValidationException($violations);
-        }
+        return $input;
     }
 }

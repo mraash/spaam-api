@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Output;
 
-use Stringable;
-use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use SymfonyExtension\Http\Output\AbstractOutput;
+use SymfonyExtension\Http\Input\Validator\Violation;
+use SymfonyExtension\Http\Input\Validator\ViolationList;
 
 class ValidationErrorOutput extends AbstractErrorOutput
 {
     public function __construct(
         private string $message,
-        private ConstraintViolationListInterface $violations,
+        private ViolationList $violations,
     ) {
     }
 
@@ -42,18 +40,11 @@ class ValidationErrorOutput extends AbstractErrorOutput
     /**
      * @return array<string,string>
      */
-    private function getPrettyViolation(ConstraintViolationInterface $violation): array
+    private function getPrettyViolation(Violation $violation): array
     {
-        $propertyPath = $violation->getPropertyPath();
-        $message = $violation->getMessage();
-
-        if ($message instanceof Stringable) {
-            $message = $message->__toString();
-        }
-
         return [
-            'propertyPath' => $propertyPath,
-            'message' => $message,
+            'propertyPath' => $violation->getPropertyPath(),
+            'message' => $violation->getMessage(),
         ];
     }
 }
