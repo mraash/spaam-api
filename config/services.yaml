@@ -1,10 +1,10 @@
 parameters:
     exceptions:
-        # Symfony exceptions
-        # Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
-        # Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException: { httpCode: 405, visible: true },
-        # Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
-        # Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
+        # Symfony http exceptions
+        Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
+        Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
+        Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException: { httpCode: 405, visible: true },
 
         # App exceptions
         SymfonyExtension\Http\Input\Builder\Exception\JsonBodyDecodeException: { httpCode: 400, visible: true },
