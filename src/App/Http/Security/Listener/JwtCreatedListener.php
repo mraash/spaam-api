@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Security;
+namespace App\Http\Security\Listener;
 
 use App\Domain\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;

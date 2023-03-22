@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Security;
+namespace App\Http\Security\UserProvider;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepository;
@@ -11,7 +11,7 @@ use LogicException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ApiUserProvider implements PayloadAwareUserProviderInterface
+class JwtUserProvider implements PayloadAwareUserProviderInterface
 {
     public function __construct(
         private UserRepository $userRepository,

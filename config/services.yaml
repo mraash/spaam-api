@@ -1,12 +1,10 @@
 parameters:
     exceptions:
         # Symfony exceptions
-        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
-        Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException: { httpCode: 405, visible: true },
-
-        # Temporarily customize authentication errors
-        Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
-        Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
+        # Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { httpCode: 404, visible: true },
+        # Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException: { httpCode: 405, visible: true },
+        # Symfony\Component\HttpKernel\Exception\BadRequestHttpException: { httpCode: 400, visible: true },
+        # Symfony\Component\Security\Core\Exception\AccessDeniedException: { httpCode: 403, visible: true },
 
         # App exceptions
         SymfonyExtension\Http\Input\Builder\Exception\JsonBodyDecodeException: { httpCode: 400, visible: true },
@@ -52,6 +50,24 @@ services:
     App\Http\ExceptionHandler\Validation\ValidationExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 15 }
-    App\Http\Security\JwtCreatedListener:
+    App\Http\Security\Listener\JwtCreatedListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created }
+    App\Http\Security\Listener\AuthenticationSuccessListener:
+        tags:
+            - {
+                name: kernel.event_listener,
+                event: lexik_jwt_authentication.on_authentication_success,
+                priority: -1,
+                method: onSuccessResponse
+            }
+    App\Http\Security\Listener\AuthenticationFailureListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_failure, method: onInvalidCredentials }
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_invalid, method: onInvalidJwt }
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_not_found, method: onJWTNotFound }
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_expired, method: onJWTExpired }
+    App\Http\Security\Listener\RefreshFailureListener:
+        tags:
+            - { name: kernel.event_listener, event: gesdinet.refresh_token_failure , method: onTokenInvalid }
+            - { name: kernel.event_listener, event: gesdinet.refresh_token_not_found, method: onTokenNotFound }

@@ -46,7 +46,7 @@ class TypeConverter
 
     public function convertType(mixed $value, Type $type): mixed
     {
-        // TODO: make this more beatiful
+        // TODO: Make this more beatiful
 
         if (!is_string($value)) {
             return $value;
