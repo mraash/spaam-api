@@ -62,7 +62,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
         $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
-        $this->assertCount(0, $responseData['data']);
+        $this->assertCount(0, $responseData['payload']);
     }
 
     public function test_unauthorized(): void

@@ -16,7 +16,7 @@ class ResourceOutput extends AbstractSuccessOutput
         $this->resource = $entity->toResource();
     }
 
-    protected function data(): array
+    protected function payload(): array
     {
         return $this->resource->toArray();
     }

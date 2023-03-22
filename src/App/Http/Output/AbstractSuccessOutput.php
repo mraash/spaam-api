@@ -12,12 +12,12 @@ abstract class AbstractSuccessOutput extends AbstractOutput
     {
         return [
             'success' => true,
-            'data' => $this->data(),
+            'payload' => $this->payload(),
         ];
     }
 
     /**
      * @return mixed[]
      */
-    abstract protected function data(): array;
+    abstract protected function payload(): array;
 }

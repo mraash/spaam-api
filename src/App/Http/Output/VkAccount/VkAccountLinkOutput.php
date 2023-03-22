@@ -13,7 +13,7 @@ class VkAccountLinkOutput extends AbstractSuccessOutput
     ) {
     }
 
-    protected function data(): array
+    protected function payload(): array
     {
         return [
             'link' => $this->link,

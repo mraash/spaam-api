@@ -25,7 +25,7 @@ class ResourceListOutput extends AbstractSuccessOutput
         $this->collection = new ResourceCollection($resourceList);
     }
 
-    protected function data(): array
+    protected function payload(): array
     {
         return $this->collection->toArray();
     }

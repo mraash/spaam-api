@@ -117,16 +117,16 @@ abstract class AppWebTestCase extends WebTestCase
 
     /**
      * @param mixed[] $json
-     * @param mixed[] $dataSchema
+     * @param mixed[] $payloadSchema
      */
-    protected function assertJsonMatchesSuccessSchema(array $json, array $dataSchema): void
+    protected function assertJsonMatchesSuccessSchema(array $json, array $payloadSchema): void
     {
         $this->assertJsonDocumentMatchesSchema($json, [
             'type' => 'object',
-            'required' => ['success', 'data'],
+            'required' => ['success', 'payload'],
             'properties' => [
                 'success' => ['type' => 'boolean'],
-                'data' => $dataSchema,
+                'payload' => $payloadSchema,
             ],
         ]);
     }
