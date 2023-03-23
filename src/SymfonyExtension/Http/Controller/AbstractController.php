@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyContr
 use Symfony\Component\HttpFoundation\JsonResponse;
 use SymfonyExtension\Http\Output\AbstractOutput;
 
-class AbstractController extends SymfonyController
+abstract class AbstractController extends SymfonyController
 {
     /**
      * @param array<string,mixed> $headers

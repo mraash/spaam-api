@@ -5,7 +5,7 @@ namespace App\Http\Controller;
 use App\Domain\Entity\User;
 use SymfonyExtension\Http\Controller\AbstractController as BaseController;
 
-class AbstractController extends BaseController
+abstract class AbstractController extends BaseController
 {
     public function getUser(): User
     {

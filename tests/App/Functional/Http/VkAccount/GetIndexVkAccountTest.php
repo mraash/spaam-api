@@ -13,7 +13,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
     private static function getUri(): string
     {
-        return "/v1/vk-accounts";
+        return '/v1/vk-accounts';
     }
 
     /**
