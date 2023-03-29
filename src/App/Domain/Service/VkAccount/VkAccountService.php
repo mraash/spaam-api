@@ -7,15 +7,15 @@ namespace App\Domain\Service\VkAccount;
 use App\Domain\Entity\User;
 use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\VkAccountRepository;
+use App\Domain\Service\Vk\VkService;
 use App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException;
 use App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException;
-use App\Integration\VkApi\VkApiInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VkAccountService
 {
     public function __construct(
-        private VkApiInterface $vkApi,
+        private VkService $vkService,
         private VkAccountRepository $repository,
         private UrlGeneratorInterface $urlGenerator,
         private bool $isDev,
@@ -35,7 +35,7 @@ class VkAccountService
             $redirectUrl = null;
         }
 
-        return $this->vkApi->getAuthLink($this->vkAppId, $redirectUrl);
+        return $this->vkService->getAuthLink($this->vkAppId, $redirectUrl);
     }
 
     public function create(User $owner, int $vkId, string $vkAccessToken): VkAccount

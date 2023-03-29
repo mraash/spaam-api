@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controller;
 
 use App\Domain\Service\SpamPanel\SpamPanelService;
+use App\Domain\Service\Vk\VkService;
 use App\Http\Output\ResourceListOutput;
 use App\Http\Output\ResourceOutput;
 use App\Http\Output\SuccessOutput;
-use App\Http\Request\SpamPanel\CreateSpamPanelInput;
-use App\Http\Request\SpamPanel\UpdateSpamPanelInput;
+use App\Http\Input\SpamPanel\CreateSpamPanelInput;
+use App\Http\Input\SpamPanel\UpdateSpamPanelInput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,6 +18,7 @@ class SpamPanelController extends AbstractController
 {
     public function __construct(
         private SpamPanelService $spamPanelService,
+        private VkService $vkService,
     ) {
     }
 
@@ -77,6 +79,22 @@ class SpamPanelController extends AbstractController
         $user = $this->getUser();
 
         $this->spamPanelService->delete($user, $id);
+
+        return $this->jsonOutput(new SuccessOutput());
+    }
+
+    #[Route('/v1/spam-panels/{id<\d+>}/send-once', methods: 'POST', name: 'api.v1.spamPanels.sendOnce')]
+    public function sendOnce(int $id): JsonResponse
+    {
+        $user = $this->getUser();
+
+        $panel = $this->spamPanelService->findOneById($user, $id);
+
+        $this->vkService->sendMessage(
+            $panel->getSender(),
+            $panel->getRecipient(),
+            $this->spamPanelService->chooseTet($panel)
+        );
 
         return $this->jsonOutput(new SuccessOutput());
     }

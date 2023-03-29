@@ -7,6 +7,7 @@ namespace App\Domain\Service\SpamPanel;
 use App\Domain\Entity\SpamPanel;
 use App\Domain\Entity\User;
 use App\Domain\Repository\SpamPanelRepository;
+use App\Domain\Service\SpamPanel\Exception\EmptyTextListException;
 use App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException;
 use App\Domain\Service\VkAccount\VkAccountService;
 
@@ -70,6 +71,20 @@ class SpamPanelService
 
         $this->repository->remove($panel);
         $this->repository->flush();
+    }
+
+    public function chooseTet(SpamPanel $panel): string
+    {
+        $textList = $panel->getTexts();
+        $count = count($textList);
+
+        if ($count === 0) {
+            throw new EmptyTextListException();
+        }
+
+        $index = rand(0, count($textList) - 1);
+
+        return $textList[$index];
     }
 
     /**

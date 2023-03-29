@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Request\SpamPanel;
+namespace App\Http\Input\SpamPanel;
 
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;

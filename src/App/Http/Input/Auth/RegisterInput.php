@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Request\Auth;
+namespace App\Http\Input\Auth;
 
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\EqualTo;

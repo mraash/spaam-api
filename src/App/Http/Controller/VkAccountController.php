@@ -9,7 +9,7 @@ use App\Http\Output\ResourceListOutput;
 use App\Http\Output\ResourceOutput;
 use App\Http\Output\SuccessOutput;
 use App\Http\Output\VkAccount\VkAccountLinkOutput;
-use App\Http\Request\VkAccount\CreateVkAccountInput;
+use App\Http\Input\VkAccount\CreateVkAccountInput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 

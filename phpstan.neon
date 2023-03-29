@@ -8,9 +8,8 @@ parameters:
         - ./tests/**/Exxample*.php
     ignoreErrors:
         - '#Cannot cast mixed to (int|float|string|bool)#'
-        - "#Strict comparison using === between mixed and '' will always evaluate to false#"
         -
-            message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read#'
+            message: '#Property [a-zA-Z\\]+::\$id is never written, only read#'
             path: ./src/App/Domain/Entity/
         -
             message: '#Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert::assertCount\(\) expects Countable\|iterable, mixed given.#'

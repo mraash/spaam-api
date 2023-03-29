@@ -12,6 +12,9 @@ parameters:
         App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException: { httpCode: 400, visible: true },
         App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException: { httpCode: 404, visible: true },
         App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException: { httpCode: 404, visible: true },
+        App\Domain\Service\SpamPanel\Exception\EmptyTextListException: { httpCode: 409, visible: true },
+        App\Integration\VKontakte\Exception\RecipientNotFoundException: { httpCode: 409, visible: true },
+        App\Integration\VKontakte\Exception\MessageNotAllowedException: { httpCode: 409, visible: true },
 
 services:
     _defaults:
@@ -22,6 +25,7 @@ services:
             bool $isProd: '@=container.getParameter("kernel.environment") == "prod"'
             bool $isDebug: '%kernel.debug%'
             int $vkAppId: '%env(MY_VK_APP)%'
+            string $vkApiVersion: '5.131'
 
     # Namespaces
     App\:
@@ -36,7 +40,7 @@ services:
 
 
     # Integrations
-    App\Integration\VkApi\VkApiInterface: '@App\Integration\VkApi\VkApi'
+    App\Integration\VKontakte\Interface\VkApiInterface: '@App\Integration\VKontakte\VkApi'
 
     # Services
     App\Http\ExceptionHandler\Uncaught\ExceptionResolver:

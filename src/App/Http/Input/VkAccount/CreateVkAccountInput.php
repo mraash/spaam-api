@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Request\VkAccount;
+namespace App\Http\Input\VkAccount;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 use SymfonyExtension\Http\Input\Input\AbstractBaseInput;
@@ -30,10 +31,10 @@ class CreateVkAccountInput extends AbstractBaseInput
                 new NotBlank(),
                 new Type('integer'),
             ]),
-            // 'expires_in' => new Required([
-            //     new NotBlank(),
-            //     new Type('string'),
-            // ]),
+            'expires_in' => new Optional([
+                new NotBlank(),
+                new Type('string'),
+            ]),
         ];
     }
 

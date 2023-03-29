@@ -2,20 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VkApi;
+namespace App\Integration\VKontakte\Part\AuthApi;
 
-class VkApi implements VkApiInterface
+use App\Integration\VKontakte\Interface\AuthApiInterface;
+
+/**
+ * @internal For App\Integration\VKontakte
+ */
+class AuthApi implements AuthApiInterface
 {
-    private const API_VERSION = '5.131';
+    public function __construct(
+        private readonly string $vkApiVersion,
+    ) {
+    }
 
     public function getAuthLink(int $appId, string $redirectUrl = null): string
     {
         $query = [
             'client_id' => $appId,
             'display' => 'page',
-            'scope' => 'messages,offline',
+            'scope' => 'messages,groups,offline',
             'response_type' => 'token',
-            'v' => self::API_VERSION,
+            'v' => $this->vkApiVersion,
         ];
 
         if ($redirectUrl) {

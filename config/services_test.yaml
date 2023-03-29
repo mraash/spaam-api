@@ -1,2 +1,2 @@
 services:
-    App\Integration\VkApi\VkApiInterface: '@Tests\App\Mock\Integration\VkApi\VkApiMock'
+    App\Integration\VKontakte\Interface\VkApiInterface: '@Tests\App\Mock\Integration\VKontakte\VkApiMock'
