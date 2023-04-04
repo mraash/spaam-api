@@ -39,7 +39,7 @@ class AuthController extends AbstractController
         throw new LogicException('This method should not be called.');
     }
 
-    #[Route('/v1/auth/token/refresh', methods: 'POST', name: 'api.v1.auth.token.refresh')]
+    #[Route('/v1/auth/refresh', methods: 'POST', name: 'api.v1.auth.refresh')]
     public function refreshToken(): never
     {
         // Route is activated in config/packages/security.yaml

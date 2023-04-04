@@ -22,7 +22,7 @@ security:
                 provider: null
                 authenticator: lexik_jwt_authentication.security.jwt_authenticator
             refresh_jwt:
-                check_path: api.v1.auth.token.refresh
+                check_path: api.v1.auth.refresh
 
     access_control:
         - { path: ^/v1/auth, roles: PUBLIC_ACCESS }

@@ -12,7 +12,7 @@ class AuthenticationSuccessListener
     {
         $event->setData([
             'success' => true,
-            'data' => $event->getData(),
+            'payload' => $event->getData(),
         ]);
     }
 }
