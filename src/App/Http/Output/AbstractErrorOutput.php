@@ -12,12 +12,12 @@ abstract class AbstractErrorOutput extends AbstractOutput
     {
         return [
             'success' => false,
-            'err' => $this->err(),
+            'error' => $this->error(),
         ];
     }
 
     /**
      * @return mixed[]
      */
-    abstract protected function err(): array;
+    abstract protected function error(): array;
 }

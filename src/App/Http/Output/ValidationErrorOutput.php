@@ -15,7 +15,7 @@ class ValidationErrorOutput extends AbstractErrorOutput
     ) {
     }
 
-    protected function err(): array
+    protected function error(): array
     {
         return [
             'message' => $this->message,

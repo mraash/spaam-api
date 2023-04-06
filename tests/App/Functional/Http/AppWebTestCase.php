@@ -138,10 +138,10 @@ abstract class AppWebTestCase extends WebTestCase
     {
         $this->assertJsonDocumentMatchesSchema($json, [
             'type' => 'object',
-            'required' => ['success', 'err'],
+            'required' => ['success', 'error'],
             'properties' => [
                 'success' => ['type' => 'boolean'],
-                'err' => [
+                'error' => [
                     'type' => 'object',
                     'required' => ['message'],
                     'properties' => [
