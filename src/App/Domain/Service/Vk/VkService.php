@@ -17,11 +17,6 @@ class VkService
     ) {
     }
 
-    public function getAuthLink(int $appId, string $redirectUrl = null): string
-    {
-        return $this->api->auth()->getAuthLink($appId, $redirectUrl);
-    }
-
     public function sendMessage(VkAccount $sender, string $recipientSlug, string $message): void
     {
         try {

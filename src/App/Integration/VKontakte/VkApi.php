@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Integration\VKontakte;
 
+use App\Integration\VKontakte\Interface\UsersApiInterface;
 use App\Integration\VKontakte\Interface\VkApiInterface;
 use App\Integration\VKontakte\Part\AuthApi\AuthApi;
 use App\Integration\VKontakte\Part\GoupsApi\GroupsApi;
+use App\Integration\VKontakte\Part\UsersApi\UsersApi;
 use App\Integration\VKontakte\Part\WallApi\WallApi;
 
 class VkApi implements VkApiInterface
@@ -15,6 +17,7 @@ class VkApi implements VkApiInterface
         private AuthApi $auth,
         private WallApi $wall,
         private GroupsApi $groups,
+        private UsersApi $users,
     ) {
     }
 
@@ -31,5 +34,10 @@ class VkApi implements VkApiInterface
     public function groups(): GroupsApi
     {
         return $this->groups;
+    }
+
+    public function users(): UsersApiInterface
+    {
+        return $this->users;
     }
 }

@@ -11,4 +11,6 @@ interface VkApiInterface
     public function wall(): WallApiInterface;
 
     public function groups(): GroupsApiInterface;
+
+    public function users(): UsersApiInterface;
 }

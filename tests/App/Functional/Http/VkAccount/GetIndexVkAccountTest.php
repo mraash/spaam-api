@@ -25,10 +25,18 @@ class GetIndexVkAccountTest extends VkAccountTestCase
             'type' => 'array',
             'items' => [
                 'type' => 'object',
-                'required' => ['id', 'vkId'],
+                'required' => ['id', 'vk'],
                 'properties' => [
                     'id' => ['type' => 'integer'],
-                    'vkId' => ['type' => 'integer'],
+                    'vk' => [
+                        'type' => 'object',
+                        'required' => ['id', 'slug', 'fullName'],
+                        'properties' => [
+                            'id' => ['type' => 'integer'],
+                            'slug' => ['type' => 'string'],
+                            'fullName' => ['type' => 'string'],
+                        ],
+                    ],
                 ],
             ],
         ];

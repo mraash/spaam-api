@@ -26,6 +26,12 @@ class VkAccount implements ResourceEntityInterface
     #[ORM\Column]
     private string $vkAccessToken;
 
+    #[ORM\Column(length: 255)]
+    private string $vkSlug;
+
+    #[ORM\Column(length: 255)]
+    private string $vkFullName;
+
     public function getId(): int
     {
         return $this->id;
@@ -61,6 +67,30 @@ class VkAccount implements ResourceEntityInterface
     public function setVkAccessToken(string $vkAccessToken): self
     {
         $this->vkAccessToken = $vkAccessToken;
+        return $this;
+    }
+
+    public function getVkSlug(): string
+    {
+        return $this->vkSlug;
+    }
+
+    public function setVkSlug(string $vkSlug): self
+    {
+        $this->vkSlug = $vkSlug;
+
+        return $this;
+    }
+
+    public function getVkFullName(): string
+    {
+        return $this->vkFullName;
+    }
+
+    public function setVkFullName(string $vkFullName): self
+    {
+        $this->vkFullName = $vkFullName;
+
         return $this;
     }
 

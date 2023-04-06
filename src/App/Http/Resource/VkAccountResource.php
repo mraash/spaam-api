@@ -18,7 +18,11 @@ class VkAccountResource extends AbstractResource
     {
         return [
             'id' => $this->vkAccount->getId(),
-            'vkId' => $this->vkAccount->getVkId(),
+            'vk' => [
+                'id' => $this->vkAccount->getVkId(),
+                'slug' => $this->vkAccount->getVkSlug(),
+                'fullName' => $this->vkAccount->getVkfullName(),
+            ],
         ];
     }
 }

@@ -24,7 +24,8 @@ class CreateVkAccountTest extends VkAccountTestCase
 
         $this->client->request(self::getMethod(), self::getUri(), parameters: [
             'access_token' => 'abc',
-            'user_id' => '123'
+            'user_id' => '123',
+            'expires_in' => '0',
         ]);
 
         $response = $this->client->getResponse();

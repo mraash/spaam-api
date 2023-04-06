@@ -20,6 +20,8 @@ trait CreatesVkAccountTrait
             ->setOwner($owner)
             ->setVkAccessToken($vkAccessToken)
             ->setVkId($vkId)
+            ->setVkSlug('slug')
+            ->setVkFullName('full name')
         ;
 
         $this->em->persist($vkAccount);

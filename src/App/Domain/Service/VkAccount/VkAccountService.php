@@ -10,13 +10,14 @@ use App\Domain\Repository\VkAccountRepository;
 use App\Domain\Service\Vk\VkService;
 use App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException;
 use App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException;
+use App\Integration\VKontakte\Interface\VkApiInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VkAccountService
 {
     public function __construct(
-        private VkService $vkService,
         private VkAccountRepository $repository,
+        private VkApiInterface $vkApi,
         private UrlGeneratorInterface $urlGenerator,
         private bool $isDev,
         private int $vkAppId,
@@ -35,7 +36,7 @@ class VkAccountService
             $redirectUrl = null;
         }
 
-        return $this->vkService->getAuthLink($this->vkAppId, $redirectUrl);
+        return $this->vkApi->auth()->getAuthLink($this->vkAppId, $redirectUrl);
     }
 
     public function create(User $owner, int $vkId, string $vkAccessToken): VkAccount
@@ -44,12 +45,16 @@ class VkAccountService
             throw new VkAccountAlreadyAddedException();
         }
 
+        $userInfo = $this->vkApi->users()->get($vkAccessToken, $vkId)->userInfo;
+
         $vkAccount = new VkAccount();
 
         $vkAccount
             ->setOwner($owner)
-            ->setVkId($vkId)
             ->setVkAccessToken($vkAccessToken)
+            ->setVkId($vkId)
+            ->setVkSlug($userInfo->domain)
+            ->setVkFullName("$userInfo->firstName $userInfo->lastName")
         ;
 
         $this->repository->save($vkAccount);
