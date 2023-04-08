@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part\UsersApi;
+namespace App\Integration\VKontakte\Part;
 
 use App\Integration\VKontakte\Interface\UsersApiInterface;
 use App\Integration\VKontakte\Part\AbstractPartApi;
-use App\Integration\VKontakte\Part\UsersApi\Output\UserOutput;
+use App\Integration\VKontakte\Response\Output\User\UserOutput;
 
 /**
  * @internal For App\Integration\VKontakte

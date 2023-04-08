@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Integration\VKontakte\Interface;
 
-use App\Integration\VKontakte\Part\WallApi\Output\PostIdOutput;
+use App\Integration\VKontakte\Response\Output\Wall\PostIdOutput;
 
 interface WallApiInterface
 {

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\App\Mock\Integration\VKontakte;
 
-use App\Integration\VKontakte\Info\GroupInfo;
-use App\Integration\VKontakte\Info\UserInfo;
 use App\Integration\VKontakte\Interface\AuthApiInterface;
 use App\Integration\VKontakte\Interface\GroupsApiInterface;
 use App\Integration\VKontakte\Interface\UsersApiInterface;
 use App\Integration\VKontakte\Interface\VkApiInterface;
 use App\Integration\VKontakte\Interface\WallApiInterface;
-use App\Integration\VKontakte\Part\GoupsApi\Output\GroupOutput;
-use App\Integration\VKontakte\Part\UsersApi\Output\UserOutput;
-use App\Integration\VKontakte\Part\WallApi\Output\PostIdOutput;
+use App\Integration\VKontakte\Response\Info\GroupInfo;
+use App\Integration\VKontakte\Response\Info\UserInfo;
+use App\Integration\VKontakte\Response\Output\Group\GroupOutput;
+use App\Integration\VKontakte\Response\Output\User\UserOutput;
+use App\Integration\VKontakte\Response\Output\Wall\PostIdOutput;
 
 class VkApiMock implements VkApiInterface
 {

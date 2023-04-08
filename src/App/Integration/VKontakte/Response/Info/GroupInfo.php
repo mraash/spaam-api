@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Info;
+namespace App\Integration\VKontakte\Response\Info;
 
 use App\Integration\VKontakte\Exception\ContractException;
 

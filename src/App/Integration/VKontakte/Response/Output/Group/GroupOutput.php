@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part\GoupsApi\Output;
+namespace App\Integration\VKontakte\Response\Output\Group;
 
 use App\Integration\VKontakte\Exception\ContractException;
-use App\Integration\VKontakte\Info\GroupInfo;
-use App\Integration\VKontakte\Part\AbstractOutput;
+use App\Integration\VKontakte\Response\Info\GroupInfo;
+use App\Integration\VKontakte\Response\Output\AbstractOutput;
 
 class GroupOutput extends AbstractOutput
 {

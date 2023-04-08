@@ -6,10 +6,10 @@ namespace App\Integration\VKontakte;
 
 use App\Integration\VKontakte\Interface\UsersApiInterface;
 use App\Integration\VKontakte\Interface\VkApiInterface;
-use App\Integration\VKontakte\Part\AuthApi\AuthApi;
-use App\Integration\VKontakte\Part\GoupsApi\GroupsApi;
-use App\Integration\VKontakte\Part\UsersApi\UsersApi;
-use App\Integration\VKontakte\Part\WallApi\WallApi;
+use App\Integration\VKontakte\Part\AuthApi;
+use App\Integration\VKontakte\Part\GroupsApi;
+use App\Integration\VKontakte\Part\UsersApi;
+use App\Integration\VKontakte\Part\WallApi;
 
 class VkApi implements VkApiInterface
 {

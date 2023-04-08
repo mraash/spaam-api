@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part\AuthApi;
+namespace App\Integration\VKontakte\Part;
 
 use App\Integration\VKontakte\Interface\AuthApiInterface;
 

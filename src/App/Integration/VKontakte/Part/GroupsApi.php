@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part\GoupsApi;
+namespace App\Integration\VKontakte\Part;
 
 use App\Integration\VKontakte\Interface\GroupsApiInterface;
 use App\Integration\VKontakte\Part\AbstractPartApi;
-use App\Integration\VKontakte\Part\GoupsApi\Output\GroupOutput;
+use App\Integration\VKontakte\Response\Output\Group\GroupOutput;
 
 /**
  * @internal For App\Integration\VKontakte

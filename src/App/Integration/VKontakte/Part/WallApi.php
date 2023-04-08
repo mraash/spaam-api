@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part\WallApi;
+namespace App\Integration\VKontakte\Part;
+namespace App\Integration\VKontakte\Part;
 
 use App\Integration\VKontakte\Interface\WallApiInterface;
 use App\Integration\VKontakte\Part\AbstractPartApi;
-use App\Integration\VKontakte\Part\WallApi\Output\PostIdOutput;
+use App\Integration\VKontakte\Response\Output\Wall\PostIdOutput;
 
 /**
  * @internal For App\Integration\VKontakte

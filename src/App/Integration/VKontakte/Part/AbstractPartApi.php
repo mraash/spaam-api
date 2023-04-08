@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Integration\VKontakte\Part;
 
 use App\Integration\VKontakte\Exception\VkApiException;
+use App\Integration\VKontakte\Response\Output\ErrorOutput;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Integration\VKontakte\Part;
+namespace App\Integration\VKontakte\Response\Output;
 
 use App\Integration\VKontakte\Exception\ContractException;
 use Symfony\Contracts\HttpClient\ResponseInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Integration\VKontakte\Interface;
 
-use App\Integration\VKontakte\Part\UsersApi\Output\UserOutput;
+use App\Integration\VKontakte\Response\Output\User\UserOutput;
 
 interface UsersApiInterface
 {
