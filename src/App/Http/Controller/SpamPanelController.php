@@ -10,9 +10,11 @@ use App\Http\Output\ResourceListOutput;
 use App\Http\Output\ResourceOutput;
 use App\Http\Output\SuccessOutput;
 use App\Http\Input\SpamPanel\CreateSpamPanelInput;
-use App\Http\Input\SpamPanel\UpdateSpamPanelInput;
+use App\Http\Input\SpamPanel\PatchSpamPanelInput;
+use App\Http\Input\SpamPanel\PutSpamPanelInput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use SymfonyExtension\Domain\Support\NullArg;
 
 class SpamPanelController extends AbstractController
 {
@@ -57,8 +59,8 @@ class SpamPanelController extends AbstractController
         return $this->jsonOutput(new SuccessOutput());
     }
 
-    #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.update')]
-    public function update(UpdateSpamPanelInput $input, int $id): JsonResponse
+    #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.put')]
+    public function updateWhole(PutSpamPanelInput $input, int $id): JsonResponse
     {
         $senderId = $input->getSenderId();
         $recipient = $input->getRecipient();
@@ -69,6 +71,22 @@ class SpamPanelController extends AbstractController
         $panel = $this->spamPanelService->findOneById($user, $id);
 
         $this->spamPanelService->updateWhole($panel, $senderId, $recipient, $texts, $timers);
+
+        return $this->jsonOutput(new SuccessOutput());
+    }
+
+    #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PATCH', name: 'api.v1.spamPanels.patch')]
+    public function updatePart(PatchSpamPanelInput $input, int $id): JsonResponse
+    {
+        $senderId = $input->getSenderId() ?? new NullArg();
+        $recipient = $input->getRecipient() ?? new NullArg();
+        $texts = $input->getTexts() ?? new NullArg();
+        $timers = $input->getTimers() ?? new NullArg();
+
+        $user = $this->getUser();
+        $panel = $this->spamPanelService->findOneById($user, $id);
+
+        $this->spamPanelService->updatePart($panel, $senderId, $recipient, $texts, $timers);
 
         return $this->jsonOutput(new SuccessOutput());
     }

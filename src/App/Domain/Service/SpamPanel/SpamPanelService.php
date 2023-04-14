@@ -10,6 +10,7 @@ use App\Domain\Repository\SpamPanelRepository;
 use App\Domain\Service\SpamPanel\Exception\EmptyTextListException;
 use App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException;
 use App\Domain\Service\VkAccount\VkAccountService;
+use SymfonyExtension\Domain\Support\NullArg;
 
 class SpamPanelService
 {
@@ -52,6 +53,31 @@ class SpamPanelService
         $panel->setTimers($timers);
 
         if ($senderId !== $panel->getSender()->getId()) {
+            $sender = $this->vkAccountService->findOneById($panel->getOwner(), $senderId);
+
+            $panel->setSender($sender);
+        }
+
+        $this->repository->save($panel);
+        $this->repository->flush();
+    }
+
+    /**
+     * @param string[] $texts
+     * @param array<array<string,int>> $timers
+     */
+    public function updatePart(
+        SpamPanel $panel,
+        int|NullArg $senderId,
+        string|NullArg $recipient,
+        array|NullArg $texts,
+        array|NullArg $timers
+    ): void {
+        $recipient instanceof NullArg ?: $panel->setRecipient($recipient);
+        $texts instanceof NullArg ?: $panel->setTexts($texts);
+        $timers instanceof NullArg ?: $panel->setTimers($timers);
+
+        if (!($senderId instanceof NullArg) && $senderId !== $panel->getSender()->getId()) {
             $sender = $this->vkAccountService->findOneById($panel->getOwner(), $senderId);
 
             $panel->setSender($sender);
