@@ -30,7 +30,7 @@ class DeleteVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonSuccessSchema($responseData);
+        $this->assertJsonIdSchema($responseData);
         $this->assertNull($dbVkAccount);
     }
 

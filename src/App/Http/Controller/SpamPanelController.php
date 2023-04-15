@@ -12,6 +12,7 @@ use App\Http\Output\SuccessOutput;
 use App\Http\Input\SpamPanel\CreateSpamPanelInput;
 use App\Http\Input\SpamPanel\PatchSpamPanelInput;
 use App\Http\Input\SpamPanel\PutSpamPanelInput;
+use App\Http\Output\IdOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyExtension\Domain\Support\NullArg;
@@ -54,9 +55,9 @@ class SpamPanelController extends AbstractController
 
         $user = $this->getUser();
 
-        $this->spamPanelService->create($user, $senderId, $recipient, $texts, $timers);
+        $panel = $this->spamPanelService->create($user, $senderId, $recipient, $texts, $timers);
 
-        return $this->jsonOutput(new SuccessOutput());
+        return $this->jsonOutput(new ResourceOutput($panel));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.put')]
@@ -72,7 +73,7 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->updateWhole($panel, $senderId, $recipient, $texts, $timers);
 
-        return $this->jsonOutput(new SuccessOutput());
+        return $this->jsonOutput(new ResourceOutput($panel));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PATCH', name: 'api.v1.spamPanels.patch')]
@@ -88,7 +89,7 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->updatePart($panel, $senderId, $recipient, $texts, $timers);
 
-        return $this->jsonOutput(new SuccessOutput());
+        return $this->jsonOutput(new ResourceOutput($panel));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'DELETE', name: 'api.v1.spamPanels.delete')]
@@ -98,7 +99,7 @@ class SpamPanelController extends AbstractController
 
         $this->spamPanelService->delete($user, $id);
 
-        return $this->jsonOutput(new SuccessOutput());
+        return $this->jsonOutput(new IdOutput($id));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}/send-once', methods: 'POST', name: 'api.v1.spamPanels.sendOnce')]

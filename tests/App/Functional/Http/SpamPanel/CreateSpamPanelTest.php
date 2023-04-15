@@ -44,7 +44,7 @@ class CreateSpamPanelTest extends SpamPanelTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonSuccessSchema($responseData);
+        $this->assertJsonMatchesPayloadSchema($responseData, self::getResourceSchema());
         $this->assertInstanceOf(SpamPanel::class, $dbSpamPanel);
     }
 

@@ -40,7 +40,7 @@ class GetLinkTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
+        $this->assertJsonMatchesPayloadSchema($responseData, self::getResponseSchema());
     }
 
     public function test_unauthorized(): void

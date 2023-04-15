@@ -16,32 +16,6 @@ class GetIndexVkAccountTest extends VkAccountTestCase
         return '/v1/vk-accounts';
     }
 
-    /**
-     * @return mixed[]
-     */
-    private static function getResponseSchema(): array
-    {
-        return [
-            'type' => 'array',
-            'items' => [
-                'type' => 'object',
-                'required' => ['id', 'vk'],
-                'properties' => [
-                    'id' => ['type' => 'integer'],
-                    'vk' => [
-                        'type' => 'object',
-                        'required' => ['id', 'slug', 'fullName'],
-                        'properties' => [
-                            'id' => ['type' => 'integer'],
-                            'slug' => ['type' => 'string'],
-                            'fullName' => ['type' => 'string'],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
     public function test_successful(): void
     {
         $user = $this->createAndLoginUser();
@@ -53,7 +27,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
+        $this->assertJsonMatchesResourceListSchema($responseData, self::getResourceSchema());
     }
 
     public function test_another_owner(): void
@@ -69,7 +43,7 @@ class GetIndexVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
+        $this->assertJsonMatchesResourceListSchema($responseData, self::getResourceSchema());
         $this->assertCount(0, $responseData['payload']);
     }
 

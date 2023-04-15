@@ -16,29 +16,6 @@ class GetSingleVkAccountTest extends VkAccountTestCase
         return "/v1/vk-accounts/$id";
     }
 
-    /**
-     * @return mixed[]
-     */
-    private static function getResponseSchema(): array
-    {
-        return [
-            'type' => 'object',
-            'required' => ['id', 'vk'],
-            'properties' => [
-                'id' => ['type' => 'integer'],
-                'vk' => [
-                    'type' => 'object',
-                    'required' => ['id', 'slug', 'fullName'],
-                    'properties' => [
-                        'id' => ['type' => 'integer'],
-                        'slug' => ['type' => 'string'],
-                        'fullName' => ['type' => 'string'],
-                    ],
-                ],
-            ],
-        ];
-    }
-
     public function test_successful(): void
     {
         $user = $this->createAndLoginUser();
@@ -50,7 +27,7 @@ class GetSingleVkAccountTest extends VkAccountTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonResponse($response);
-        $this->assertJsonMatchesSuccessSchema($responseData, self::getResponseSchema());
+        $this->assertJsonMatchesPayloadSchema($responseData, self::getResourceSchema());
     }
 
     public function test_unauthorized(): void

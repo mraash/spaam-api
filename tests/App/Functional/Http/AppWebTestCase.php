@@ -30,7 +30,7 @@ abstract class AppWebTestCase extends WebTestCase
         /** @var EntityManager */
         $em = self::getContainer()->get('doctrine.orm.entity_manager');
 
-        $entityClass = $this->getEntityClass();
+        $entityClass = static::getEntityClass();
 
         $this->client = $client;
         $this->em = $em;
@@ -53,7 +53,7 @@ abstract class AppWebTestCase extends WebTestCase
      *
      * @phpstan-return class-string
      */
-    abstract protected function getEntityClass(): string;
+    abstract protected static function getEntityClass(): string;
 
     protected function createUser(string $email = null): User
     {
@@ -117,16 +117,21 @@ abstract class AppWebTestCase extends WebTestCase
 
     /**
      * @param mixed[] $json
-     * @param mixed[] $payloadSchema
      */
-    protected function assertJsonMatchesSuccessSchema(array $json, array $payloadSchema): void
+    protected function assertJsonIdSchema(array $json): void
     {
         $this->assertJsonDocumentMatchesSchema($json, [
             'type' => 'object',
-            'required' => ['success', 'payload'],
+            'requied' => ['success', 'payload'],
             'properties' => [
                 'success' => ['type' => 'boolean'],
-                'payload' => $payloadSchema,
+                'payload' => [
+                    'type' => 'object',
+                    'required' => ['id'],
+                    'properties' => [
+                        'id' => ['type' => 'integer'],
+                    ],
+                ],
             ],
         ]);
     }
@@ -149,6 +154,30 @@ abstract class AppWebTestCase extends WebTestCase
                     ],
                 ],
             ],
+        ]);
+    }
+
+    /**
+     * @param mixed[] $json
+     * @param mixed[] $payloadSchema
+     */
+    protected function assertJsonMatchesPayloadSchema(array $json, array $payloadSchema): void
+    {
+        $this->assertJsonDocumentMatchesSchema($json, [
+            'type' => 'object',
+            'required' => ['success', 'payload'],
+            'properties' => [
+                'success' => ['type' => 'boolean'],
+                'payload' => $payloadSchema,
+            ],
+        ]);
+    }
+
+    protected function assertJsonMatchesResourceListSchema(array $json, array $resourceSchema): void
+    {
+        $this->assertJsonMatchesPayloadSchema($json, [
+            'type' => 'array',
+            'items' => $resourceSchema,
         ]);
     }
 

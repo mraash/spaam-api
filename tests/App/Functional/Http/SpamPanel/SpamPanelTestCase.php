@@ -12,8 +12,56 @@ abstract class SpamPanelTestCase extends AppWebTestCase
 {
     use CreatesVkAccountTrait;
 
-    protected function getEntityClass(): string
+    protected static function getEntityClass(): string
     {
         return SpamPanel::class;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected static function getResourceSchema(): array
+    {
+        return [
+            'type' => 'object',
+            'required' => ['id', 'sender', 'recipient', 'texts', 'timers'],
+            'properties' => [
+                'id' => ['type' => 'integer'],
+                'sender' => [
+                    'type' => 'object',
+                    'required' => ['id', 'vk'],
+                    'properties' => [
+                        'id' => ['type' => 'integer'],
+                        'vk' => [
+                            'type' => 'object',
+                            'required' => ['id', 'slug', 'fullName'],
+                            'properties' => [
+                                'id' => ['type' => 'number'],
+                                'slug' => ['type' => 'string'],
+                                'fullName' => ['type' => 'string'],
+                            ],
+                        ],
+                    ],
+                ],
+                'recipient' => ['type' => 'string'],
+                'texts' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                    ],
+                ],
+                'timers' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'required' => ['seconds', 'repeat'],
+                        'properties' => [
+                            'seconds' => ['type' => 'integer'],
+                            'repeat' => ['type' => 'integer'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

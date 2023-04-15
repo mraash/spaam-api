@@ -11,8 +11,30 @@ abstract class VkAccountTestCase extends AppWebTestCase
 {
     use CreatesVkAccountTrait;
 
-    protected function getEntityClass(): string
+    protected static function getEntityClass(): string
     {
         return VkAccount::class;
+    }
+    /**
+     * @return mixed[]
+     */
+    protected static function getResourceSchema(): array
+    {
+        return [
+            'type' => 'object',
+            'required' => ['id', 'vk'],
+            'properties' => [
+                'id' => ['type' => 'integer'],
+                'vk' => [
+                    'type' => 'object',
+                    'required' => ['id', 'slug', 'fullName'],
+                    'properties' => [
+                        'id' => ['type' => 'integer'],
+                        'slug' => ['type' => 'string'],
+                        'fullName' => ['type' => 'string'],
+                    ],
+                ],
+            ],
+        ];
     }
 }

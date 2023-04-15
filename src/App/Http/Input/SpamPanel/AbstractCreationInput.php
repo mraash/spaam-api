@@ -7,6 +7,7 @@ namespace App\Http\Input\SpamPanel;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 use SymfonyExtension\Http\Input\Input\AbstractJsonBodyInput;
@@ -25,14 +26,14 @@ abstract class AbstractCreationInput extends AbstractJsonBodyInput
                 new Type('string'),
             ]),
             'texts' => new Required([
-                new NotBlank(),
+                new NotNull(),
                 new Type('array'),
                 new All([
                     new Type('string'),
                 ]),
             ]),
             'timers' => new Required([
-                new NotBlank(),
+                new NotNull(),
                 new Type('array'),
                 new All(new Collection([
                     'seconds' => [
