@@ -12,6 +12,7 @@ use App\Http\Output\SuccessOutput;
 use App\Http\Input\SpamPanel\CreateSpamPanelInput;
 use App\Http\Input\SpamPanel\PatchSpamPanelInput;
 use App\Http\Input\SpamPanel\PutSpamPanelInput;
+use App\Http\Input\SpamPanel\PutSpamPanelListInput;
 use App\Http\Output\IdOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,6 +61,18 @@ class SpamPanelController extends AbstractController
         return $this->jsonOutput(new ResourceOutput($panel));
     }
 
+    #[Route('/v1/spam-panels', methods: 'PUT', name: 'api.v1.spamPanels.list.put')]
+    public function updateWholeList(PutSpamPanelListInput $input): JsonResponse
+    {
+        $panelDtoList = $input->getSpamPanelList();
+
+        $user = $this->getUser();
+
+        $panelList = $this->spamPanelService->updateListFully($user, $panelDtoList);
+
+        return $this->jsonOutput(new ResourceListOutput($panelList));
+    }
+
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PUT', name: 'api.v1.spamPanels.put')]
     public function updateWhole(PutSpamPanelInput $input, int $id): JsonResponse
     {
@@ -69,9 +82,8 @@ class SpamPanelController extends AbstractController
         $timers = $input->getTimers();
 
         $user = $this->getUser();
-        $panel = $this->spamPanelService->findOneById($user, $id);
 
-        $this->spamPanelService->updateWhole($panel, $senderId, $recipient, $texts, $timers);
+        $panel = $this->spamPanelService->updateWhole($user, $id, $senderId, $recipient, $texts, $timers);
 
         return $this->jsonOutput(new ResourceOutput($panel));
     }
@@ -85,9 +97,8 @@ class SpamPanelController extends AbstractController
         $timers = $input->getTimers() ?? new NullArg();
 
         $user = $this->getUser();
-        $panel = $this->spamPanelService->findOneById($user, $id);
 
-        $this->spamPanelService->updatePart($panel, $senderId, $recipient, $texts, $timers);
+        $panel = $this->spamPanelService->updatePart($user, $id, $senderId, $recipient, $texts, $timers);
 
         return $this->jsonOutput(new ResourceOutput($panel));
     }
@@ -112,7 +123,7 @@ class SpamPanelController extends AbstractController
         $this->vkService->sendMessage(
             $panel->getSender(),
             $panel->getRecipient(),
-            $this->spamPanelService->chooseTet($panel)
+            $this->spamPanelService->chooseText($panel)
         );
 
         return $this->jsonOutput(new SuccessOutput());

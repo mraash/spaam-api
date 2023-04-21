@@ -104,6 +104,8 @@ class SpamPanel implements ResourceEntityInterface
      */
     public function setTimers(array $timers): self
     {
+        // TODO: Add typing to $timers variable
+
         $this->timers = $timers;
         return $this;
     }
