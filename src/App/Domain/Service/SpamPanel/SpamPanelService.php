@@ -141,6 +141,30 @@ class SpamPanelService
         return $panel;
     }
 
+    /**
+     * @param int[] $idList
+     */
+    public function deleteList(User $owner, array $idList): void
+    {
+        $panelList = $this->repository->findListBy([
+            'owner' => $owner,
+            'id' => $idList,
+        ]);
+
+        if (count($panelList) < count($idList)) {
+            $findedIdList = array_map(fn (SpamPanel $item) => $item->getId(), $panelList);
+
+            foreach ($idList as $id) {
+                if (!in_array($id, $findedIdList)) {
+                    throw SpamPanelNotFoundException::fromIdMessage($id);
+                }
+            }
+        }
+
+        $this->repository->removeList($panelList);
+        $this->repository->flush();
+    }
+
     public function delete(User $owner, int $id): void
     {
         $panel = $this->repository->findOneByIdWithOwner($owner, $id);

@@ -6,6 +6,7 @@ namespace App\Http\Controller;
 
 use App\Domain\Service\SpamPanel\SpamPanelService;
 use App\Domain\Service\Vk\VkService;
+use App\Http\Input\IdListInput;
 use App\Http\Output\ResourceListOutput;
 use App\Http\Output\ResourceOutput;
 use App\Http\Output\SuccessOutput;
@@ -13,6 +14,7 @@ use App\Http\Input\SpamPanel\CreateSpamPanelInput;
 use App\Http\Input\SpamPanel\PatchSpamPanelInput;
 use App\Http\Input\SpamPanel\PutSpamPanelInput;
 use App\Http\Input\SpamPanel\PutSpamPanelListInput;
+use App\Http\Output\IdListOutput;
 use App\Http\Output\IdOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -101,6 +103,18 @@ class SpamPanelController extends AbstractController
         $panel = $this->spamPanelService->updatePart($user, $id, $senderId, $recipient, $texts, $timers);
 
         return $this->jsonOutput(new ResourceOutput($panel));
+    }
+
+    #[Route('/v1/spam-panels', methods: 'DELETE', name: 'api.v1.spamPanels.list.delete')]
+    public function deleteList(IdListInput $input): JsonResponse
+    {
+        $idList = $input->getIdList();
+
+        $user = $this->getUser();
+
+        $this->spamPanelService->deleteList($user, $idList);
+
+        return $this->jsonOutput(new IdListOutput($idList));
     }
 
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'DELETE', name: 'api.v1.spamPanels.delete')]

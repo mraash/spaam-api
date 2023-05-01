@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Output;
 
-class IdOutput extends AbstractSuccessOutput
+class IdListOutput extends AbstractSuccessOutput
 {
+    /**
+     * @param int[] $ids
+     */
     public function __construct(
-        private int $id,
+        private array $ids,
     ) {
     }
 
     protected function payload(): array
     {
         return [
-            'id' => $this->id,
+            'ids' => $this->ids,
         ];
     }
 }

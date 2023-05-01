@@ -33,6 +33,16 @@ class SpamPanelRepository extends AbstractRepository
     }
 
     /**
+     * @param SpamPanel[] $spamPanelList
+     */
+    public function removeList(array $spamPanelList): void
+    {
+        foreach ($spamPanelList as $spamPanel) {
+            $this->remove($spamPanel);
+        }
+    }
+
+    /**
      * @return SpamPanel[]
      */
     public function findAllWithOwner(User $user): array
