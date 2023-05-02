@@ -97,49 +97,26 @@ class PutSpamPanelListInput extends AbstractJsonBodyInput
         $itemsParam = $this->getParam('items');
 
         foreach ($itemsParam as $itemAndId) {
-            /** @var int */
-            $id = $itemAndId['id'];
+            /** @var int */ $id = $itemAndId['id'];
+            /** @var array<string,mixed> */ $item = $itemAndId['item'];
 
-            /** @var array<string,mixed> */
-            $item = $itemAndId['item'];
+            /** @var int */ $senderId = $item['senderId'];
+            /** @var string */ $recipient = $item['recipient'];
+            /** @var string[] */ $texts = $item['texts'];
+            /** @var array<array<string,int>> */ $rawTimers = $item['timers'];
 
-
-            /** @var int */
-            $senderId = $item['senderId'];
-
-            /** @var string */
-            $recipient = $item['recipient'];
-
-            /** @var string[] */
-            $texts = $item['texts'];
-
-            /** @var array<array<string,int>> */
-            $rawTimers = $item['timers'];
-
-            /** @var TimerInputDto[] */
-            $timers = [];
+            /** @var TimerInputDto[] */ $timers = [];
 
             foreach ($rawTimers as $timerItem) {
-                /** @var int */
-                $seconds = $timerItem['seconds'];
-
-                /** @var int */
-                $repeat = $timerItem['repeat'];
-
-                $timers[] = new TimerInputDto($seconds, $repeat);
+                $timers[] = new TimerInputDto(
+                    /** @var int */ $timerItem['seconds'],
+                    /** @var int */ $timerItem['repeat']
+                );
             }
 
-            $spamPanel = new SpamPanelInputDto(
-                $senderId,
-                $recipient,
-                $texts,
-                $timers,
-            );
+            $spamPanel = new SpamPanelInputDto($senderId, $recipient, $texts, $timers);
 
-            $this->items[] = new SpamPanelIdInputDto(
-                $id,
-                $spamPanel
-            );
+            $this->items[] = new SpamPanelIdInputDto($id, $spamPanel);
         }
     }
 }

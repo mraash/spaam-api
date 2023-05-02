@@ -11,6 +11,7 @@ use App\Http\Response\Output\ResourceListOutput;
 use App\Http\Response\Output\ResourceOutput;
 use App\Http\Response\Output\SuccessOutput;
 use App\Http\Request\Input\SpamPanel\CreateSpamPanelInput;
+use App\Http\Request\Input\SpamPanel\CreateSpamPanelListInput;
 use App\Http\Request\Input\SpamPanel\PatchSpamPanelInput;
 use App\Http\Request\Input\SpamPanel\PutSpamPanelInput;
 use App\Http\Request\Input\SpamPanel\PutSpamPanelListInput;
@@ -46,6 +47,18 @@ class SpamPanelController extends AbstractController
         $panel = $this->spamPanelService->findOneById($user, $id);
 
         return $this->jsonOutput(new ResourceOutput($panel));
+    }
+
+    #[Route('/v1/spam-panels/list', methods: 'POST', name: 'api.v1.spamPanels.list.create')]
+    public function createList(CreateSpamPanelListInput $input): JsonResponse
+    {
+        $panelList = $input->getItems();
+
+        $user = $this->getUser();
+
+        $createdPanelList = $this->spamPanelService->createList($user, $panelList);
+
+        return $this->jsonOutput(new ResourceListOutput($createdPanelList));
     }
 
     #[Route('/v1/spam-panels', methods: 'POST', name: 'api.v1.spamPanels.create')]

@@ -6,11 +6,13 @@ namespace App\Domain\Service\SpamPanel;
 
 use App\Domain\Entity\SpamPanel;
 use App\Domain\Entity\User;
+use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\SpamPanelRepository;
 use App\Domain\Service\SpamPanel\Exception\EmptyTextListException;
 use App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException;
 use App\Domain\Service\VkAccount\VkAccountService;
 use App\Http\Request\InputDto\SpamPanel\SpamPanelIdInputDto;
+use App\Http\Request\InputDto\SpamPanel\SpamPanelInputDto;
 use SymfonyExtension\Domain\Support\NullArg;
 
 class SpamPanelService
@@ -41,6 +43,46 @@ class SpamPanelService
         $this->repository->flush();
 
         return $panel;
+    }
+
+    /**
+     * @param SpamPanelInputDto[] $panelDtoList
+     *
+     * @return SpamPanel[]
+     */
+    public function createList(User $owner, array $panelDtoList): array
+    {
+        $panelList = [];
+
+        foreach ($panelDtoList as $panelDto) {
+            $timers = [];
+
+            foreach ($panelDto->timers as $timerObject) {
+                $timers[] = [
+                    'seconds' => $timerObject->seconds,
+                    'repeat' => $timerObject->repeat,
+                ];
+            }
+
+            // TODO: Optimize vk accounts selection here
+            $sender = $this->vkAccountService->findOneById($owner, $panelDto->senderId);
+    
+            $panel = new SpamPanel();
+    
+            $panel->setOwner($owner);
+            $panel->setSender($sender);
+            $panel->setRecipient($panelDto->recipient);
+            $panel->setTexts($panelDto->texts);
+            $panel->setTimers($timers);
+    
+            $this->repository->save($panel);
+
+            $panelList[] = $panel;
+        }
+
+        $this->repository->flush();
+
+        return $panelList;
     }
 
     /**
