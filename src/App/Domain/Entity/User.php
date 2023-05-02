@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use App\Domain\Repository\UserRepository;
-use App\Http\Resource\UserResource;
+use App\Http\Response\Resource\UserResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

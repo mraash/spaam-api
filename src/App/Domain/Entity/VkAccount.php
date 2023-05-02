@@ -4,7 +4,7 @@ namespace App\Domain\Entity;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\VkAccountRepository;
-use App\Http\Resource\VkAccountResource;
+use App\Http\Response\Resource\VkAccountResource;
 use Doctrine\ORM\Mapping as ORM;
 use SymfonyExtension\Domain\Entity\ResourceEntityInterface;
 

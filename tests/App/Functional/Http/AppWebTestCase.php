@@ -173,6 +173,10 @@ abstract class AppWebTestCase extends WebTestCase
         ]);
     }
 
+    /**
+     * @param mixed[] $json
+     * @param mixed[] $resourceSchema
+     */
     protected function assertJsonMatchesResourceListSchema(array $json, array $resourceSchema): void
     {
         $this->assertJsonMatchesPayloadSchema($json, [

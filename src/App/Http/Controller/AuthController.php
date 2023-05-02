@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controller;
 
 use App\Domain\Service\User\UserService;
-use App\Http\Input\Auth\RegisterInput;
+use App\Http\Request\Input\Auth\RegisterInput;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler;
 use LogicException;
 use Symfony\Component\HttpFoundation\Response;

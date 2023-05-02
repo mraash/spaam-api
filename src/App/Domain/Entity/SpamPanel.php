@@ -4,7 +4,7 @@ namespace App\Domain\Entity;
 
 use App\Domain\Entity\VkAccount;
 use App\Domain\Repository\SpamPanelRepository;
-use App\Http\Resource\SpamPanelResource;
+use App\Http\Response\Resource\SpamPanelResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SymfonyExtension\Domain\Entity\ResourceEntityInterface;

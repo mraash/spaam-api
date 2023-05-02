@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\ExceptionHandler\Validation;
 
-use App\Http\Output\ValidationErrorOutput;
+use App\Http\Response\Output\ValidationErrorOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Security\Listener;
 
-use App\Http\Output\ErrorOutput;
+use App\Http\Response\Output\ErrorOutput;
 use Gesdinet\JWTRefreshTokenBundle\Event\RefreshAuthenticationFailureEvent;
 use Gesdinet\JWTRefreshTokenBundle\Event\RefreshTokenNotFoundEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Security\Listener;
 
-use App\Http\Output\ErrorOutput;
+use App\Http\Response\Output\ErrorOutput;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTExpiredEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTInvalidEvent;

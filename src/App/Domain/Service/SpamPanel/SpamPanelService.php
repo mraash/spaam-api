@@ -10,7 +10,7 @@ use App\Domain\Repository\SpamPanelRepository;
 use App\Domain\Service\SpamPanel\Exception\EmptyTextListException;
 use App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException;
 use App\Domain\Service\VkAccount\VkAccountService;
-use App\Http\InputDto\SpamPanel\SpamPanelIdInputDto;
+use App\Http\Request\InputDto\SpamPanel\SpamPanelIdInputDto;
 use SymfonyExtension\Domain\Support\NullArg;
 
 class SpamPanelService

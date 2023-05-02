@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controller;
 
 use App\Domain\Service\VkAccount\VkAccountService;
-use App\Http\Output\ResourceListOutput;
-use App\Http\Output\ResourceOutput;
-use App\Http\Output\VkAccount\VkAccountLinkOutput;
-use App\Http\Input\VkAccount\CreateVkAccountInput;
-use App\Http\Output\IdOutput;
+use App\Http\Response\Output\ResourceListOutput;
+use App\Http\Response\Output\ResourceOutput;
+use App\Http\Response\Output\VkAccount\VkAccountLinkOutput;
+use App\Http\Request\Input\VkAccount\CreateVkAccountInput;
+use App\Http\Response\Output\IdOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 

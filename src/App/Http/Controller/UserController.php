@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
-use App\Http\Output\ResourceOutput;
+use App\Http\Response\Output\ResourceOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
