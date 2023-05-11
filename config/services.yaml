@@ -15,6 +15,7 @@ parameters:
         App\Domain\Service\SpamPanel\Exception\EmptyTextListException: { httpCode: 409, visible: true },
         App\Domain\Service\Vk\Exception\RecipientNotFoundException: { httpCode: 409, visible: true },
         App\Domain\Service\Vk\Exception\MessageNotAllowedException: { httpCode: 409, visible: true },
+        App\Domain\Service\Vk\Exception\CaptchaException: { httpCode: 409, visible: true },
 
 services:
     _defaults:

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Service\Vk;
 
 use App\Domain\Entity\VkAccount;
+use App\Domain\Service\Vk\Exception\CaptchaException;
 use App\Domain\Service\Vk\Exception\MessageNotAllowedException;
 use App\Domain\Service\Vk\Exception\RecipientNotFoundException;
 use App\Integration\VKontakte\Exception\VkApiException;
@@ -40,6 +41,10 @@ class VkService
         catch (VkApiException $err) {
             if ($err->getVkCode() === 214) {
                 throw new MessageNotAllowedException();
+            }
+
+            if ($err->getVkCode() === 14) {
+                throw new CaptchaException();
             }
 
             throw $err;

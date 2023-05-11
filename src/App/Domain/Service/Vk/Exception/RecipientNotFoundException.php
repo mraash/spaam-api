@@ -10,6 +10,6 @@ class RecipientNotFoundException extends RuntimeException
 {
     public function __construct(int|string $id)
     {
-        parent::__construct(sprintf('Recipient with id "%s" not found', (string) $id));
+        parent::__construct(sprintf('Recipient with id "%s" not found.', (string) $id));
     }
 }
