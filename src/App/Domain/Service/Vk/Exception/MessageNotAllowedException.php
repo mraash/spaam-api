@@ -10,6 +10,6 @@ class MessageNotAllowedException extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Access denied');
+        parent::__construct('Message not allowed.');
     }
 }

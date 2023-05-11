@@ -9,7 +9,7 @@ use App\Integration\VKontakte\Part\AbstractPartApi;
 use App\Integration\VKontakte\Response\Output\User\UserOutput;
 
 /**
- * @internal For App\Integration\VKontakte
+ * @internal for App\Integration\VKontakte
  */
 class UsersApi extends AbstractPartApi implements UsersApiInterface
 {

@@ -7,7 +7,7 @@ namespace App\Integration\VKontakte\Part;
 use App\Integration\VKontakte\Interface\AuthApiInterface;
 
 /**
- * @internal For App\Integration\VKontakte
+ * @internal for App\Integration\VKontakte
  */
 class AuthApi implements AuthApiInterface
 {

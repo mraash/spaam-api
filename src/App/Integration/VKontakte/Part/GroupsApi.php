@@ -9,7 +9,7 @@ use App\Integration\VKontakte\Part\AbstractPartApi;
 use App\Integration\VKontakte\Response\Output\Group\GroupOutput;
 
 /**
- * @internal For App\Integration\VKontakte
+ * @internal for App\Integration\VKontakte
  */
 class GroupsApi extends AbstractPartApi implements GroupsApiInterface
 {
@@ -20,6 +20,9 @@ class GroupsApi extends AbstractPartApi implements GroupsApiInterface
     {
         $responseData = $this->requestSuccessful('groups.getById', $token, [
             'group_id' => $id,
+            'fields' => [
+                'can_post'
+            ],
         ])->toArray();
 
         return GroupOutput::fromBodyData($responseData);

@@ -13,8 +13,8 @@ parameters:
         App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException: { httpCode: 404, visible: true },
         App\Domain\Service\SpamPanel\Exception\SpamPanelNotFoundException: { httpCode: 404, visible: true },
         App\Domain\Service\SpamPanel\Exception\EmptyTextListException: { httpCode: 409, visible: true },
-        App\Integration\VKontakte\Exception\RecipientNotFoundException: { httpCode: 409, visible: true },
-        App\Integration\VKontakte\Exception\MessageNotAllowedException: { httpCode: 409, visible: true },
+        App\Domain\Service\Vk\Exception\RecipientNotFoundException: { httpCode: 409, visible: true },
+        App\Domain\Service\Vk\Exception\MessageNotAllowedException: { httpCode: 409, visible: true },
 
 services:
     _defaults:

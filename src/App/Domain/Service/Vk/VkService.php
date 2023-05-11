@@ -30,6 +30,10 @@ class VkService
             throw $err;
         }
 
+        if (!$group->canPost) {
+            throw new MessageNotAllowedException();
+        }
+
         try {
             $this->api->wall()->postToGroup($sender->getVkAccessToken(), $group->id, $message);
         }

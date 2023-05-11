@@ -10,7 +10,7 @@ use App\Integration\VKontakte\Part\AbstractPartApi;
 use App\Integration\VKontakte\Response\Output\Wall\PostIdOutput;
 
 /**
- * @internal For App\Integration\VKontakte
+ * @internal for App\Integration\VKontakte
  */
 class WallApi extends AbstractPartApi implements WallApiInterface
 {
