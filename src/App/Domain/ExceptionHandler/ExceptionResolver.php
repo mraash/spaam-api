@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Http\ExceptionHandler\Uncaught;
+namespace App\Domain\ExceptionHandler;
 
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,10 @@ use Throwable;
  */
 class ExceptionResolver
 {
-    /** @var array<string,ExceptionMetadata> */
-    /** @phpstan-var array<class-string,ExceptionMetadata> */
+    /** 
+     * @var array<string,ExceptionMetadata>
+     * @phpstan-var array<class-string,ExceptionMetadata>
+     */
     private array $metadataList = [];
 
     /**
@@ -50,7 +53,8 @@ class ExceptionResolver
             }
         }
 
-        return ExceptionMetadata::fromCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        // Return default metadata
+        return new ExceptionMetadata(Response::HTTP_INTERNAL_SERVER_ERROR, false);
     }
 
     public function getMessage(Throwable $throwable): string

@@ -44,17 +44,20 @@ services:
     App\Integration\VKontakte\Interface\VkApiInterface: '@App\Integration\VKontakte\VkApi'
 
     # Services
-    App\Http\ExceptionHandler\Uncaught\ExceptionResolver:
+    App\Domain\ExceptionHandler\ExceptionResolver:
         arguments:
             $rawMetadataList: '%exceptions%'
 
     # Listeners
-    App\Http\ExceptionHandler\Uncaught\ApiExceptionListener:
+    App\Domain\ExceptionHandler\Uncaught\UncautghtExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+            - { name: kernel.event_listener, event: kernel.exception, priority: 20 }
     App\Http\ExceptionHandler\Validation\ValidationExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 15 }
+            - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+    App\Http\ExceptionHandler\Uncaught\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
     App\Http\Security\Listener\JwtCreatedListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created }

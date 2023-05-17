@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\ExceptionHandler\Uncaught;
 
+use App\Domain\ExceptionHandler\ExceptionResolver;
 use App\Http\Response\Output\ErrorOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
