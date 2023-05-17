@@ -48,15 +48,17 @@ abstract class AbstractInput
         return $this->params[$key] ?? null;
     }
 
-    public function getParam(string $key): mixed
-    {
-        return $this->getParamOrNull($key)
-            ?? throw new InvalidArgumentException(sprintf('Undefined param key %s', $key))
-        ;
-    }
-
     public function hasParam(string $key): bool
     {
-        return isset($this->params[$key]);
+        return array_key_exists($key, $this->params);
+    }
+
+    public function getParam(string $key): mixed
+    {
+        if (!$this->hasParam($key)) {
+            throw new InvalidArgumentException(sprintf('Undefined param key %s', $key));
+        }
+
+        return $this->getParamOrNull($key);
     }
 }

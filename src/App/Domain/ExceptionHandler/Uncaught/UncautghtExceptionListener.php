@@ -28,8 +28,12 @@ class UncautghtExceptionListener
 
         $message = $throwable::class;
 
-        if ($throwable->getCode() !== 0) $message .= "({$throwable->getCode()})";
-        if ($throwable->getMessage() !== '') $message .= ": {$throwable->getMessage()}";
+        if ($throwable->getCode() !== 0) {
+            $message .= "({$throwable->getCode()})";
+        }
+        if ($throwable->getMessage() !== '') {
+            $message .= ": {$throwable->getMessage()}";
+        }
 
         $this->logger->error($message, $throwable->getTrace());
     }

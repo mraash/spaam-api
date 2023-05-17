@@ -13,7 +13,7 @@ class RefreshFailureListener
 {
     public function onTokenInvalid(RefreshAuthenticationFailureEvent $event): void
     {
-        // TODO: Make this as validation exception
+        // todo: Make this as validation exception
         $output = new ErrorOutput('Invalid refresh token.');
 
         $response = new JsonResponse($output->toArray(), 401);
@@ -23,7 +23,7 @@ class RefreshFailureListener
 
     public function onTokenNotFound(RefreshTokenNotFoundEvent $event): void
     {
-        // TODO: Make this as validation exception
+        // todo: Make this as validation exception
         $output = new ErrorOutput('Refresh token not found.');
 
         $response = new JsonResponse($output->toArray(), 401);

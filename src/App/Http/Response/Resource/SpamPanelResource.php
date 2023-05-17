@@ -18,7 +18,7 @@ class SpamPanelResource extends AbstractResource
     {
         return [
             'id' => $this->spamPanel->getId(),
-            'sender' => $this->spamPanel->getSender()->toResource()->toArray(),
+            'sender' => $this->spamPanel->getSender()?->toResource()->toArray(),
             'recipient' => $this->spamPanel->getRecipient(),
             'texts' => $this->spamPanel->getTexts(),
             'timers' => $this->spamPanel->getTimers(),

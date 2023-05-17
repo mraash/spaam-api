@@ -7,8 +7,8 @@ namespace App\Http\Request\InputDto\SpamPanel;
 class TimerInputDto
 {
     public function __construct(
-        public readonly int $seconds,
-        public readonly int $repeat,
+        public readonly ?int $seconds,
+        public readonly ?int $repeat,
     ) {
     }
 }

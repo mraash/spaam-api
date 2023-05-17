@@ -11,7 +11,7 @@ class SpamPanelInputDto
      * @param TimerInputDto[] $timers
      */
     public function __construct(
-        public readonly int $senderId,
+        public readonly ?int $senderId,
         public readonly string $recipient,
         public readonly array $texts,
         public readonly array $timers

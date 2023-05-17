@@ -17,7 +17,7 @@ use SymfonyExtension\Http\Input\Input\AbstractJsonBodyInput;
 
 class PutSpamPanelListInput extends AbstractJsonBodyInput
 {
-    // TODO: Use InputDto in all Inputs where its needed
+    // todo: Use InputDto in all Inputs where its needed
     /**
      * @var SpamPanelIdInputDto[]
      */
@@ -29,22 +29,23 @@ class PutSpamPanelListInput extends AbstractJsonBodyInput
             'items' => new Required([
                 new NotNull(),
                 new Type('array'),
-                new All(
+                new All([
+                    new NotNull(),
+                    new Type('array'),
                     new Collection([
                         'id' => new Required([
                             new NotNull(),
-                            new Type(['integer']),
+                            new Type('integer'),
                         ]),
                         'item' => new Required([
                             new NotNull(),
                             new Type('array'),
                             new Collection([
                                 'senderId' => new Required([
-                                    new NotBlank(),
-                                    new Type('integer'),
+                                    new Type(['integer', 'null']),
                                 ]),
                                 'recipient' => new Required([
-                                    new NotBlank(),
+                                    new NotNull(),
                                     new Type('string'),
                                 ]),
                                 'texts' => new Required([
@@ -59,19 +60,17 @@ class PutSpamPanelListInput extends AbstractJsonBodyInput
                                     new Type('array'),
                                     new All(new Collection([
                                         'seconds' => [
-                                            new NotBlank(),
-                                            new Type('integer'),
+                                            new Type(['integer', 'null']),
                                         ],
                                         'repeat' => [
-                                            new NotBlank(),
-                                            new Type('integer'),
+                                            new Type(['integer', 'null']),
                                         ],
                                     ])),
                                 ]),
                             ]),
-                        ])
-                    ])
-                )
+                        ]),
+                    ]),
+                ]),
             ]),
         ];
     }
@@ -103,13 +102,13 @@ class PutSpamPanelListInput extends AbstractJsonBodyInput
             /** @var int */ $senderId = $item['senderId'];
             /** @var string */ $recipient = $item['recipient'];
             /** @var string[] */ $texts = $item['texts'];
-            /** @var array<array<string,int>> */ $rawTimers = $item['timers'];
+            /** @var array<array<string,int|null>> */ $rawTimers = $item['timers'];
 
             /** @var TimerInputDto[] */ $timers = [];
 
             foreach ($rawTimers as $timerItem) {
                 $timers[] = new TimerInputDto(
-                    /** @var int */ $timerItem['seconds'],
+                    /** @var int */                    $timerItem['seconds'],
                     /** @var int */ $timerItem['repeat']
                 );
             }

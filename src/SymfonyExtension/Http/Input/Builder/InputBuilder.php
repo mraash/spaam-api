@@ -35,7 +35,7 @@ class InputBuilder
      */
     public function build(Request $request, string $inputClass, bool $validate): AbstractInput
     {
-        // TODO: Add some abstractions here
+        // todo: Add some abstractions here
 
         /** @var Collection */
         $rules = $inputClass::rules();

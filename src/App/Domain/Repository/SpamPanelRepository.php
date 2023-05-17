@@ -49,7 +49,7 @@ class SpamPanelRepository extends AbstractRepository
     {
         return $this->findListBy([
             'owner' => $user,
-        ]);
+        ], ['id' => 'ASC']);
     }
 
     public function findOneByIdWithOwner(User $user, int $id): ?SpamPanel

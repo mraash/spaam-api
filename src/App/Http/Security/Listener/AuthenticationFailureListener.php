@@ -15,7 +15,7 @@ class AuthenticationFailureListener
 {
     public function onInvalidCredentials(AuthenticationFailureEvent $event): void
     {
-        // TODO: Make this as validation exception
+        // todo: Make this as validation exception
         $output = new ErrorOutput('Invalid credentials.');
 
         $response = new JsonResponse($output->toArray(), 401);

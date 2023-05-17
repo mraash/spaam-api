@@ -22,8 +22,8 @@ class SpamPanel implements ResourceEntityInterface
     private User $owner;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private VkAccount $sender;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?VkAccount $sender;
 
     #[ORM\Column(length: 255)]
     private string $recipient;
@@ -32,7 +32,7 @@ class SpamPanel implements ResourceEntityInterface
     #[ORM\Column(type: Types::JSON)]
     private array $texts = [];
 
-    /** @var array<array<string,int>> */
+    /** @var array<array<string,int|null>> */
     #[ORM\Column(type: Types::JSON)]
     private array $timers = [];
 
@@ -52,12 +52,12 @@ class SpamPanel implements ResourceEntityInterface
         return $this;
     }
 
-    public function getSender(): VkAccount
+    public function getSender(): ?VkAccount
     {
         return $this->sender;
     }
 
-    public function setSender(VkAccount $sender): self
+    public function setSender(?VkAccount $sender): self
     {
         $this->sender = $sender;
         return $this;
@@ -92,7 +92,7 @@ class SpamPanel implements ResourceEntityInterface
     }
 
     /**
-     * @return array<array<string,int>>
+     * @return array<array<string,int|null>>
      */
     public function getTimers(): array
     {
@@ -100,11 +100,11 @@ class SpamPanel implements ResourceEntityInterface
     }
 
     /**
-     * @param array<array<string,int>> $timers
+     * @param array<array<string,int|null>> $timers
      */
     public function setTimers(array $timers): self
     {
-        // TODO: Add typing to $timers variable
+        // todo: Add typing to $timers variable
 
         $this->timers = $timers;
         return $this;

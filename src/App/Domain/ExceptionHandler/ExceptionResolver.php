@@ -14,7 +14,7 @@ use Throwable;
  */
 class ExceptionResolver
 {
-    /** 
+    /**
      * @var array<string,ExceptionMetadata>
      * @phpstan-var array<class-string,ExceptionMetadata>
      */

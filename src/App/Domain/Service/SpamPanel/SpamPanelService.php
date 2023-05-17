@@ -25,11 +25,11 @@ class SpamPanelService
 
     /**
      * @param string[] $texts
-     * @param array<array<string,int>> $timers
+     * @param array<array<string,int|null>> $timers
      */
-    public function create(User $owner, int $senderId, string $recipient, array $texts, array $timers): SpamPanel
+    public function create(User $owner, ?int $senderId, string $recipient, array $texts, array $timers): SpamPanel
     {
-        $sender = $this->vkAccountService->findOneById($owner, $senderId);
+        $sender = $this->getSenderOrNull($owner, $senderId);
 
         $panel = new SpamPanel();
 
@@ -64,17 +64,17 @@ class SpamPanelService
                 ];
             }
 
-            // TODO: Optimize vk accounts selection here
-            $sender = $this->vkAccountService->findOneById($owner, $panelDto->senderId);
-    
+            // todo: Optimize vk accounts selection here
+            $sender = $this->getSenderOrNull($owner, $panelDto->senderId);
+
             $panel = new SpamPanel();
-    
+
             $panel->setOwner($owner);
             $panel->setSender($sender);
             $panel->setRecipient($panelDto->recipient);
             $panel->setTexts($panelDto->texts);
             $panel->setTimers($timers);
-    
+
             $this->repository->save($panel);
 
             $panelList[] = $panel;
@@ -92,7 +92,7 @@ class SpamPanelService
      */
     public function updateListFully(User $owner, array $panelDtoList): array
     {
-        // TODO: Add something like Http\InputDto, but in Domain layer, and add some mapper
+        // todo: Add something like Http\InputDto, but in Domain layer, and add some mapper
         //   that will map Http Dtos to Domain Dtos. Then replace SpamPanelInputDto to this
         //   new thing in Domain layer.
 
@@ -100,10 +100,10 @@ class SpamPanelService
         $panelList = [];
 
         foreach ($panelDtoList as $panelDto) {
-            // TODO: Select all panelds once in this method
+            // todo: Select all panelds once in this method
             $panel = $this->findOneById($owner, $panelDto->id);
 
-            /** @var array<array<string,int>> */
+            /** @var array<array<string,int|null>> */
             $timers = [];
 
             foreach ($panelDto->item->timers as $timer) {
@@ -120,7 +120,7 @@ class SpamPanelService
                 $panelDto->item->texts,
                 $timers,
             );
-    
+
             $this->repository->save($panel);
 
             $panelList[] = $panel;
@@ -133,12 +133,12 @@ class SpamPanelService
 
     /**
      * @param string[] $texts
-     * @param array<array<string,int>> $timers
+     * @param array<array<string,int|null>> $timers
      */
     public function updateWhole(
         User $owner,
         int $id,
-        int $senderId,
+        ?int $senderId,
         string $recipient,
         array $texts,
         array $timers
@@ -155,12 +155,12 @@ class SpamPanelService
 
     /**
      * @param string[] $texts
-     * @param array<array<string,int>> $timers
+     * @param array<array<string,int|null>> $timers
      */
     public function updatePart(
         User $owner,
         int $id,
-        int|NullArg $senderId,
+        int|null|NullArg $senderId,
         string|NullArg $recipient,
         array|NullArg $texts,
         array|NullArg $timers
@@ -171,8 +171,8 @@ class SpamPanelService
         $texts instanceof NullArg ?: $panel->setTexts($texts);
         $timers instanceof NullArg ?: $panel->setTimers($timers);
 
-        if (!($senderId instanceof NullArg) && $senderId !== $panel->getSender()->getId()) {
-            $sender = $this->vkAccountService->findOneById($panel->getOwner(), $senderId);
+        if (!($senderId instanceof NullArg) && $senderId !== $panel->getSender()?->getId()) {
+            $sender = $this->getSenderOrNull($owner, $senderId);
 
             $panel->setSender($sender);
         }
@@ -254,11 +254,11 @@ class SpamPanelService
 
     /**
      * @param string[] $texts
-     * @param array<array<string,int>> $timers
+     * @param array<array<string,int|null>> $timers
      */
     private function updateEntityFully(
         SpamPanel $panel,
-        int $senderId,
+        ?int $senderId,
         string $recipient,
         array $texts,
         array $timers
@@ -267,10 +267,15 @@ class SpamPanelService
         $panel->setTexts($texts);
         $panel->setTimers($timers);
 
-        if ($senderId !== $panel->getSender()->getId()) {
-            $sender = $this->vkAccountService->findOneById($panel->getOwner(), $senderId);
+        if ($senderId !== $panel->getSender()?->getId()) {
+            $sender = $this->getSenderOrNull($panel->getOwner(), $senderId);
 
             $panel->setSender($sender);
         }
+    }
+
+    private function getSenderOrNull(User $owner, ?int $senderId): ?VkAccount
+    {
+        return $senderId !== null ? $this->vkAccountService->findOneById($owner, $senderId) : null;
     }
 }

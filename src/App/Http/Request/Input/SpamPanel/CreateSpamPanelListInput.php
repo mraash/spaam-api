@@ -30,11 +30,10 @@ class CreateSpamPanelListInput extends AbstractJsonBodyInput
                     new Type('array'),
                     new Collection([
                         'senderId' => new Required([
-                            new NotBlank(),
-                            new Type('integer'),
+                            new Type(['integer', 'null']),
                         ]),
                         'recipient' => new Required([
-                            new NotBlank(),
+                            new NotNull(),
                             new Type('string'),
                         ]),
                         'texts' => new Required([
@@ -49,12 +48,10 @@ class CreateSpamPanelListInput extends AbstractJsonBodyInput
                             new Type('array'),
                             new All(new Collection([
                                 'seconds' => [
-                                    new NotBlank(),
-                                    new Type('integer'),
+                                    new Type(['integer', 'null']),
                                 ],
                                 'repeat' => [
-                                    new NotBlank(),
-                                    new Type('integer'),
+                                    new Type(['integer', 'null']),
                                 ],
                             ])),
                         ]),
@@ -90,13 +87,13 @@ class CreateSpamPanelListInput extends AbstractJsonBodyInput
             /** @var int */ $senderId = $item['senderId'];
             /** @var string */ $recipient = $item['recipient'];
             /** @var string[] */ $texts = $item['texts'];
-            /** @var array<array<string,int>> */ $rawTimers = $item['timers'];
+            /** @var array<array<string,int|null>> */ $rawTimers = $item['timers'];
 
             /** @var TimerInputDto[] */ $timers = [];
 
             foreach ($rawTimers as $rawTimer) {
                 $timers[] = new TimerInputDto(
-                    /** @var int */ $rawTimer['seconds'],
+                    /** @var int */                    $rawTimer['seconds'],
                     /** @var int */ $rawTimer['repeat'],
                 );
             }

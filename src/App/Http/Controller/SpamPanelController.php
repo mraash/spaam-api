@@ -106,10 +106,10 @@ class SpamPanelController extends AbstractController
     #[Route('/v1/spam-panels/{id<\d+>}', methods: 'PATCH', name: 'api.v1.spamPanels.patch')]
     public function updatePart(PatchSpamPanelInput $input, int $id): JsonResponse
     {
-        $senderId = $input->getSenderId() ?? new NullArg();
-        $recipient = $input->getRecipient() ?? new NullArg();
-        $texts = $input->getTexts() ?? new NullArg();
-        $timers = $input->getTimers() ?? new NullArg();
+        $senderId = $input->hasSenderId() ? $input->getSenderId() : new NullArg();
+        $recipient = $input->getRecipientOrNull() ?? new NullArg();
+        $texts = $input->getTextsOrNull() ?? new NullArg();
+        $timers = $input->getTimersOrNull() ?? new NullArg();
 
         $user = $this->getUser();
 

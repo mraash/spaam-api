@@ -45,7 +45,7 @@ class VkApiMock implements VkApiInterface
         {
             public function getById(string $token, int|string $id): GroupOutput
             {
-                return new GroupOutput(new GroupInfo(1));
+                return new GroupOutput(new GroupInfo(1, true));
             }
         };
     }
