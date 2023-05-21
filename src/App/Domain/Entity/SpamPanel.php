@@ -22,7 +22,7 @@ class SpamPanel implements ResourceEntityInterface
     private User $owner;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?VkAccount $sender;
 
     #[ORM\Column(length: 255)]
