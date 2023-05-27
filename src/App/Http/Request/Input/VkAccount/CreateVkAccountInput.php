@@ -31,10 +31,7 @@ class CreateVkAccountInput extends AbstractBaseInput
                 new NotBlank(),
                 new Type('integer'),
             ]),
-            'expires_in' => new Optional([
-                new NotBlank(),
-                new Type('string'),
-            ]),
+            'expires_in' => new Optional(),
         ];
     }
 

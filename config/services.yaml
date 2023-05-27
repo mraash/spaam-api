@@ -25,7 +25,8 @@ services:
             bool $isDev: '@=container.getParameter("kernel.environment") == "dev"'
             bool $isProd: '@=container.getParameter("kernel.environment") == "prod"'
             bool $isDebug: '%kernel.debug%'
-            int $vkAppId: '%env(MY_VK_APP)%'
+            int $vkAppId: '%env(MY_VK_APP_ID)%'
+            $vkRedirectUrl: '%env(MY_VK_REDIRECT_URL)%'
             string $vkApiVersion: '5.131'
 
     # Namespaces

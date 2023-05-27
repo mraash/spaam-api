@@ -11,32 +11,19 @@ use App\Domain\Service\Vk\VkService;
 use App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException;
 use App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException;
 use App\Integration\VKontakte\Interface\VkApiInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VkAccountService
 {
     public function __construct(
         private VkAccountRepository $repository,
         private VkApiInterface $vkApi,
-        private UrlGeneratorInterface $urlGenerator,
-        private bool $isDev,
-        private int $vkAppId,
+        private VkService $vkService,
     ) {
     }
 
     public function getCreationLink(): string
     {
-        $redirectUrl = $this->urlGenerator->generate(
-            'api.v1.vkAccounts.create',
-            [],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
-        if ($this->isDev) {
-            $redirectUrl = null;
-        }
-
-        return $this->vkApi->auth()->getAuthLink($this->vkAppId, $redirectUrl);
+        return $this->vkService->getCreationLink();
     }
 
     public function create(User $owner, int $vkId, string $vkAccessToken): VkAccount

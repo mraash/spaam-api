@@ -21,13 +21,13 @@ class AuthApi implements AuthApiInterface
         $query = [
             'client_id' => $appId,
             'display' => 'page',
-            'scope' => 'messages,groups,offline',
+            'scope' => 'wall,groups,offline',
             'response_type' => 'token',
             'v' => $this->vkApiVersion,
         ];
 
         if ($redirectUrl) {
-            $query['redirect_url'] = $redirectUrl;
+            $query['redirect_uri'] = $redirectUrl;
         }
 
         return 'https://oauth.vk.com/authorize?' . http_build_query($query);

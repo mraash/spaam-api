@@ -24,5 +24,5 @@
 /.phpcs-cache
 
 ### phpunit/phpunit
-.phpunit.result.cache
+/.phpunit.result.cache
 /phpunit.xml

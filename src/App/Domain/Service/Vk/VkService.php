@@ -15,7 +15,16 @@ class VkService
 {
     public function __construct(
         private VkApiInterface $api,
+        private int $vkAppId,
+        private readonly string $vkRedirectUrl,
     ) {
+    }
+
+    public function getCreationLink(): string
+    {
+        $redirectUrl = $this->vkRedirectUrl ? $this->vkRedirectUrl : null;
+
+        return $this->api->auth()->getAuthLink($this->vkAppId, $redirectUrl);
     }
 
     public function sendMessage(VkAccount $sender, string $recipientSlug, string $message): void
