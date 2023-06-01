@@ -10,13 +10,11 @@ use App\Domain\Repository\VkAccountRepository;
 use App\Domain\Service\Vk\VkService;
 use App\Domain\Service\VkAccount\Exception\VkAccountAlreadyAddedException;
 use App\Domain\Service\VkAccount\Exception\VkAccountNotFoundException;
-use App\Integration\VKontakte\Interface\VkApiInterface;
 
 class VkAccountService
 {
     public function __construct(
         private VkAccountRepository $repository,
-        private VkApiInterface $vkApi,
         private VkService $vkService,
     ) {
     }
@@ -32,7 +30,7 @@ class VkAccountService
             throw new VkAccountAlreadyAddedException();
         }
 
-        $userInfo = $this->vkApi->users()->get($vkAccessToken, $vkId)->userInfo;
+        $userInfo = $this->vkService->getUser($vkAccessToken, $vkId);
 
         $vkAccount = new VkAccount();
 
